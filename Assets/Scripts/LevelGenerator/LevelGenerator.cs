@@ -76,7 +76,7 @@ public class LevelGenerator: MonoBehaviour {
         { 'F', LevelTileType.DOWNRIGHT },
         { '@', LevelTileType.ROTATE_CLOCKWISE },
         { 'G', LevelTileType.ROTATE_COUNTERCLOCKWISE },
-        { 'D', LevelTileType.DOOR },
+        { 'E', LevelTileType.DOOR },
         { 'K', LevelTileType.KEY },
         { '#', LevelTileType.WALL },
         { 'O', LevelTileType.MIRROR },
