@@ -36,25 +36,23 @@ public class PlayerController : MonoBehaviour
 
     public void HandleMove(Vector2 input)
     {
-        //TODO testare prima gli oggetti non a consumo
         var localInput = transform.InverseTransformDirection(input);
-        Command topCommand = TopPortable?.CanMove(localInput);
-        
-        if (topCommand != null)
-        {
-            LastMovement = input;
-            LastCommand = topCommand;
-            topCommand.Do(this);
-            return;
-        }
 
-        Command bottomCommand = BottomPortable?.CanMove(localInput);
-        if (bottomCommand != null)
-        {
-            LastMovement = input;
-            LastCommand = bottomCommand;
-            bottomCommand.Do(this);
-        }
+        //start from top if top is not consumable or are both consumable
+        bool startFromTop = !(TopPortable?.IsConsumable ?? false) || (BottomPortable?.IsConsumable ?? false);
+
+        if (startFromTop && HandleMove(localInput, TopPortable)) return;
+        if (HandleMove(localInput, BottomPortable)) return;
+        if (!startFromTop && HandleMove(localInput, TopPortable)) return;
+    }
+    private bool HandleMove(Vector2 input, Portable portable) {
+        Command cmd = portable?.CanMove(input);
+        if (cmd == null) return false;
+
+        LastMovement = input;
+        LastCommand = cmd;
+        cmd.Do(this);
+        return true;
     }
     public void HandleAction()
     {
