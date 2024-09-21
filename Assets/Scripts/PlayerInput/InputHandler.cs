@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class InputHandler : MonoBehaviour
 {
@@ -42,6 +43,9 @@ public class InputHandler : MonoBehaviour
                     break;
                 case "Action":
                     OnAction?.Invoke();
+                    break;
+                case "Panic":
+                    SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
                     break;
             }
         }
