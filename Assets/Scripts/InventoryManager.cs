@@ -27,7 +27,7 @@ public class InventoryManager : MonoBehaviour
 
     private void SetPortable(Portable portable, Transform placeholder, ref Portable old) {
         if (old != null) {
-            if (portable.IsKey)
+            if (old.IsKey)
                 Recover(old);
             else
                 Discard(old);
