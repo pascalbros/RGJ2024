@@ -4,7 +4,7 @@ public abstract class Command
 {
     public Portable source;
 
-    public int SourceUsages { get { source == null ? -1 : source.usages; } }
+    public int SourceUsages { get { return source == null ? -1 : source.usages; } }
 
     public void Do(PlayerController controller) {
         DoInner(controller);

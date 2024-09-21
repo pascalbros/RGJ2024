@@ -5,9 +5,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 movementMask = new Vector3(1,1,0);
 
     InputHandler inputHandler;
+    private InventoryManager inventory;
 
-    public Portable TopPortable { get; set; }
-    public Portable BottomPortable { get; set; }
+    public Portable TopPortable { get => inventory.top; set => inventory.SetTop(value); }
+    public Portable BottomPortable { get => inventory.bottom; set => inventory.SetBottom(value); }
 
     public Command LastCommand { get; private set; }
 
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         inputHandler = GetComponent<InputHandler>();
+        inventory = GetComponent<InventoryManager>();
     }
 
     private void OnEnable()
@@ -34,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     public void HandleMove(Vector2 input)
     {
+        //TODO testare prima gli oggetti non a consumo
         var localInput = transform.InverseTransformDirection(input);
         Command topCommand = TopPortable?.CanMove(localInput);
         
@@ -94,6 +97,7 @@ public class PlayerController : MonoBehaviour
         else if (BottomPortable == portable)
             HandlePickup(null, false);
     }
+    public void HandleDrop(bool top) => inventory.Drop(top);
 
     public void ApplyMovement(Vector3 delta) {
         transform.position += Vector3.Scale(transform.TransformDirection(delta), movementMask).normalized;

@@ -26,13 +26,10 @@ public class PickupCommand : Command
     }
 
     protected override void UndoInner(PlayerController controller) {
+        controller.HandleDrop(atTop);
         if (atTop) {
-            //TODO drop old top
-            Debug.Log("Drop top", controller.TopPortable);
             controller.TopPortable = oldTop;
         } else {
-            //TODO drop old bottom
-            Debug.Log("Drop bottom", controller.BottomPortable);
             controller.BottomPortable = oldBottom;
         }
         lastCommand.Undo(controller);

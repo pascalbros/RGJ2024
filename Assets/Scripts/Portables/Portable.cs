@@ -4,6 +4,18 @@ using UnityEngine;
 public class Portable: MonoBehaviour {
     public int usages = -1;
 
+    public GameObject bigIcon;
+    public GameObject smallIcon;
+
+    void Awake() {
+        bigIcon = transform.Find("Big").gameObject;
+        smallIcon = transform.Find("Icon").gameObject;
+    }
+
+    public void SetUsages(int value) {
+        usages = value;
+    }
+
     public void Use() {
         if (usages > 0) usages--;
     }
@@ -12,6 +24,7 @@ public class Portable: MonoBehaviour {
         if (usages >= 0) usages++;
     }
 
+    public bool IsConsumable { get { return usages >= 0; } }
     public bool IsExausted { get { return usages == 0; } }
 
     public virtual MoveCommand CanMove(Vector2 direction) {
@@ -21,6 +34,8 @@ public class Portable: MonoBehaviour {
     public virtual Command GetAction() {
         return null;
     }
+
+    public virtual bool IsKey { get { return false; } }
 
     public virtual void Reflect(Vector2Int direction) {}
     
