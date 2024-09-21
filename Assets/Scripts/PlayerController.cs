@@ -36,6 +36,11 @@ public class PlayerController : MonoBehaviour
 
     public void HandleMove(Vector2 input)
     {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, input, 1, LayerMask.GetMask("Wall"));
+        Debug.Log("hit "+hit.collider?.gameObject?.tag, hit.collider);
+        if (hit.collider != null && hit.collider.gameObject.tag == "Wall")
+            return;
+
         var localInput = transform.InverseTransformDirection(input);
 
         //start from top if top is not consumable or are both consumable
