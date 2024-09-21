@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 4900000, guid: 4282087a08eaa42a59a80e585004f44d, type: 3}
-  obstacle: {fileID: 0}
+  obstacle: {fileID: 5485928670405292481, guid: 7e977d212d0eb49319a086363df14907, type: 3}
   lightTile: {fileID: 7358754548138934854, guid: ee038468b08ce4e59b2de1c48fb96980, type: 3}
   darkTile: {fileID: 4034585667932154010, guid: c4797f0f96c3d4368b588e04b21bc951, type: 3}
 --- !u!4 &1700773009

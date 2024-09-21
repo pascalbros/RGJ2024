@@ -20,8 +20,8 @@ public class LevelGenerator: MonoBehaviour {
 
     private void Start() {
         var size = SizeFromLevel(this.level.text);
-        GenerateCheckboard(size.Item1, size.Item2, lightTile, darkTile);
-        LevelTileType[,] level = ParseLevel(this.level.text);
+        DrawCheckboard(size.Item1, size.Item2, lightTile, darkTile);
+        DrawLevel();
     }
 
     public static LevelTileType[,] ParseLevel(string level) {
@@ -46,7 +46,29 @@ public class LevelGenerator: MonoBehaviour {
         return (rows[0].Length, rows.Length);
     }
 
-    private void GenerateCheckboard(int width, int height, GameObject lightTile, GameObject darkTile) {
+    private void DrawLevel() {
+        LevelTileType[,] level = ParseLevel(this.level.text);
+        int width = level.GetLength(1);
+        int height = level.GetLength(0);
+        Vector3 startPosition = Vector3.zero;
+        var tileSize = lightTile.GetComponent<SpriteRenderer>().bounds.size;
+        startPosition.x -= (tileSize.x * width * 0.5f) - tileSize.x * 0.5f;
+        startPosition.y -= (tileSize.y * height * 0.5f) - tileSize.y * 0.5f;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                Vector3 position = new(startPosition.x + tileSize.x * x, startPosition.y + tileSize.y * y, startPosition.z);
+                switch (level[y, x]) {
+                    case LevelTileType.OBSTACLE:
+                        GameObject tileInstance = Instantiate(obstacle, position, Quaternion.identity);
+                        tileInstance.name = $"{obstacle.name} ({x}, {y})";
+                        tileInstance.transform.parent = transform;
+                        break;
+                }
+            }
+        }
+    }
+
+    private void DrawCheckboard(int width, int height, GameObject lightTile, GameObject darkTile) {
         Vector3 startPosition = Vector3.zero;
         var tileSize = lightTile.GetComponent<SpriteRenderer>().bounds.size;
         startPosition.x -= (tileSize.x * width * 0.5f) - tileSize.x * 0.5f;
