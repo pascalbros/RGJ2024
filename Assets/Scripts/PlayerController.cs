@@ -95,7 +95,6 @@ public class PlayerController: MonoBehaviour {
         LastCommand = null;
     }
     public void HandleReflection() {
-        Debug.Log(LastMovement);
         var cmd = new ReflectCommand(this);
         cmd.Do(this);
         LastCommand = cmd;
@@ -155,7 +154,6 @@ public class PlayerController: MonoBehaviour {
     }
 
     public void ApplyReflection(Vector2 direction) {
-        Debug.Log("reflect " + direction);
         if (IsRotated) direction = new Vector2(direction.y, direction.x);
         transform.Rotate(direction * 180);
     }
