@@ -12,17 +12,13 @@ public class InputHandler : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("awake ih");
         playerInput = GetComponent<PlayerInput>();
-         Debug.Log("awaken ih "+playerInput);
-   }
+    }
 
     private void OnEnable()
     {
-        Debug.Log("enable ih "+playerInput);
         if(playerInput == null)
             playerInput = GetComponent<PlayerInput>();
-        Debug.Log("enabled ih "+playerInput);
         playerInput.onActionTriggered += OnActionTriggered;
     }
     private void OnDisable()
@@ -32,7 +28,6 @@ public class InputHandler : MonoBehaviour
 
     private void OnActionTriggered(InputAction.CallbackContext context)
     {
-        Debug.Log(context);
         if (context.performed)
         {
             switch (context.action.name)
@@ -53,7 +48,7 @@ public class InputHandler : MonoBehaviour
     }
     Vector2 FixMovementInput(InputAction.CallbackContext context)
     {
-        Vector2 value = context.ReadValue<Vector2>();
+        Vector2 value = context.ReadValue<Vector2>().normalized;
         if (Mathf.Abs(value.x) == Mathf.Abs(value.y))
         {
             value = Vector2.zero;
