@@ -8,7 +8,6 @@ public class Movement: Portable {
 
     public override MoveCommand CanMove(Vector2 movement)
     {
-        Debug.Log(movement);
         if (!up && movement.y > 0.5) return null;
         if (!down && movement.y < -0.5) return null;
         if (!right && movement.x > 0.5) return null;

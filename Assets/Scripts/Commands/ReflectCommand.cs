@@ -11,6 +11,7 @@ public class ReflectCommand: Command {
             direction = Vector2.up;
         else
             direction = Vector2.right;
+        
     }
 
     public void Do(PlayerController controller) {
