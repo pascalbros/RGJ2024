@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class Portable: MonoBehaviour {
-    public virtual Command CanMove(Vector2 direction) {
+    public virtual MoveCommand CanMove(Vector2 direction) {
         return null;
     }
 

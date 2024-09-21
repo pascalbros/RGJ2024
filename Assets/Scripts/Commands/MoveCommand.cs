@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class MoveCommand: Command 
 {
-    private Vector3 direction;
+    public Vector3 direction { get; private set; }
 
     public MoveCommand(Vector2 direction) {
         this.direction = direction;
     }
     
     public void Do(PlayerController controller) {
-        controller.transform.position += direction;
+        controller.ApplyMovement(direction);
     }
 
     public void Undo(PlayerController controller) {
-        controller.transform.position -= direction;
+        controller.ApplyMovement(-direction);
     }
 } 
