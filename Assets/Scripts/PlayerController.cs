@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour
         LastCommand = null;
     }
     public void HandleReflection() {
+        Debug.Log(LastMovement);
         var cmd = new ReflectCommand(this);
         cmd.Do(this);
         LastCommand = cmd;

@@ -36,8 +36,10 @@ public class InventoryManager : MonoBehaviour
             portable.bigIcon.SetActive(false);
             portable.transform.parent = placeholder;
             portable.transform.localPosition = Vector3.zero;
-            var zRotation = Mathf.Abs(transform.eulerAngles.z % 360);
-            bool horiz = Mathf.Approximately(zRotation, 0f) || Mathf.Approximately(zRotation, 180f);
+            var zRotation = Mathf.Abs(transform.eulerAngles.z % 180);
+            var portZRot = Mathf.Abs(portable.transform.eulerAngles.z % 180);
+            bool horiz = !Mathf.Approximately(zRotation, 90f);
+            if (Mathf.Approximately(portZRot, 90f)) horiz = !horiz;
             portable.smallIcon.SetActive(horiz);
             portable.smallVertIcon.SetActive(!horiz);
             portable.gameObject.SetActive(true);
