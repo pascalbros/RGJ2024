@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private enum State { GAME, BUSY, PICKUP }
+
+    State state = State.GAME;
+    Portable watinigForSelection;
+
     private Vector3 movementMask = new Vector3(1,1,0);
 
     InputHandler inputHandler;
@@ -26,12 +31,14 @@ public class PlayerController : MonoBehaviour
         inputHandler.OnMove += HandleMove;
         inputHandler.OnUndo += HandleUndo;
         inputHandler.OnAction += HandleAction;
+        inputHandler.OnSelectPickup += HandlePickupSelection;
     }
     private void OnDisable()
     {
         inputHandler.OnMove -= HandleMove;
         inputHandler.OnUndo -= HandleUndo;
         inputHandler.OnAction -= HandleAction;
+        inputHandler.OnSelectPickup -= HandlePickupSelection;
     }
 
     public void InitPortables(Portable top, Portable bottom) {
@@ -41,30 +48,32 @@ public class PlayerController : MonoBehaviour
 
     public void HandleMove(Vector2 input)
     {
+        if (state != State.GAME) return;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, input, 1, LayerMask.GetMask("Wall"));
         if (hit.collider != null && hit.collider.gameObject.tag == "Wall")
             return;
 
-        var localInput = transform.InverseTransformDirection(input);
-
         //start from top if top is not consumable or are both consumable
         bool startFromTop = !(TopPortable?.IsConsumable ?? false) || (BottomPortable?.IsConsumable ?? false);
 
-        if (startFromTop && HandleMove(localInput, TopPortable)) return;
-        if (HandleMove(localInput, BottomPortable)) return;
-        if (!startFromTop && HandleMove(localInput, TopPortable)) return;
+        if (startFromTop && HandleMove(input, TopPortable)) return;
+        if (HandleMove(input, BottomPortable)) return;
+        if (!startFromTop && HandleMove(input, TopPortable)) return;
     }
     private bool HandleMove(Vector2 input, Portable portable) {
-        Command cmd = portable?.CanMove(input);
+        if (portable == null) return false;
+
+        MoveCommand cmd = portable.CanMove(input);
         if (cmd == null) return false;
 
-        LastMovement = input;
+        LastMovement = cmd.direction;
         LastCommand = cmd;
         cmd.Do(this);
         return true;
     }
     public void HandleAction()
     {
+        if (state != State.GAME) return;
         Command topCommand = TopPortable?.GetAction();
 
         if (topCommand != null)
@@ -83,6 +92,7 @@ public class PlayerController : MonoBehaviour
     }
     public void HandleUndo()
     {
+        if (state != State.GAME) return;
         if (LastCommand == null)
             return;
         LastCommand.Undo(this);
@@ -105,9 +115,35 @@ public class PlayerController : MonoBehaviour
             HandlePickup(null, false);
     }
     public void HandleDrop(bool top) => inventory.Drop(top);
+    public void HandleDiscard(Portable portable) => inventory.Discard(portable);
+    public void HandleRecover(Portable portable) => inventory.Recover(portable);
+    public void HandlePickupSelection(PickupSelection selection) {
+        switch (selection) {
+            case PickupSelection.TOP:
+                HandlePickup(watinigForSelection, true);
+                break;
+            case PickupSelection.BOTTOM:
+                HandlePickup(watinigForSelection, false);
+                break;
+            case PickupSelection.DISCARD:
+                if (!watinigForSelection.IsKey) {
+                    var cmd = new DiscardCommand(watinigForSelection, this);
+                    cmd.Do(this);
+                    LastCommand = cmd;
+                }
+                break;
+        }
+        watinigForSelection = null;
+        state = State.GAME;        
+    }
 
     public void ApplyMovement(Vector3 delta) {
-        transform.position += Vector3.Scale(transform.TransformDirection(delta), movementMask).normalized;
+        transform.position += delta;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 0.4f, LayerMask.GetMask("Portable"));
+        if (hit.collider != null) {
+            Portable portable = hit.collider.transform.parent.GetComponent<Portable>();
+            if (portable != null) TryToPickup(portable);
+        }
     }
 
     public void ApplyRotation(Vector3 angle) {
@@ -119,4 +155,27 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(direction * 180);
     }
 
+    public void TryToPickup(Portable portable) {
+        if (TopPortable == null) {
+            HandlePickup(portable, true);
+            return;
+        }
+        if (BottomPortable == null) {
+            HandlePickup(portable, false);
+            return;
+        }
+
+        state = State.PICKUP;
+        watinigForSelection = portable;
+
+        //TODO
+
+       //Selection selection = ShowSelectionMenu(
+       //    TopPortable.bigIcon.Sprite,
+       //    BottomPortable.bigIcon.Sprite,
+       //    portable.bigIcon.Sprite,
+       //    transform.rotation
+       //);
+
+    }
 }

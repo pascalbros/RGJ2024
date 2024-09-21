@@ -8,10 +8,11 @@ public class Movement: Portable {
 
     public override MoveCommand CanMove(Vector2 movement)
     {
-        if (!up && movement.y > 0.5) return null;
-        if (!down && movement.y < -0.5) return null;
-        if (!right && movement.x > 0.5) return null;
-        if (!left && movement.x < -0.5) return null;
+        var local = transform.InverseTransformDirection(movement);
+        if (!up && local.y > 0.5) return null;
+        if (!down && local.y < -0.5) return null;
+        if (!right && local.x > 0.5) return null;
+        if (!left && local.x < -0.5) return null;
 
         return new MoveCommand(this, movement.normalized);
     }

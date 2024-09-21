@@ -8,6 +8,7 @@ public class InputHandler : MonoBehaviour
     public event Action<Vector2> OnMove;
     public event Action OnAction;
     public event Action OnUndo;
+    public event Action<PickupSelection> OnSelectPickup;
 
     PlayerInput playerInput;
 
@@ -43,6 +44,15 @@ public class InputHandler : MonoBehaviour
                     break;
                 case "Action":
                     OnAction?.Invoke();
+                    break;
+                case "PutTop":
+                    OnSelectPickup.Invoke(PickupSelection.TOP);
+                    break;
+                case "PutBottom":
+                    OnSelectPickup.Invoke(PickupSelection.BOTTOM);
+                    break;
+                case "DiscardSelection":
+                    OnSelectPickup.Invoke(PickupSelection.DISCARD);
                     break;
                 case "Panic":
                     SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);

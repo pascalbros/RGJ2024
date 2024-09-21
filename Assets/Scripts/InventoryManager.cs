@@ -26,40 +26,43 @@ public class InventoryManager : MonoBehaviour
     }
 
     private void SetPortable(Portable portable, Transform placeholder, ref Portable old) {
-        Debug.Log("old",old);
-        Debug.Log("new",portable);
-        if (old != null) 
-            old.gameObject.SetActive(false);
+        if (old != null) {
+            if (portable.IsKey)
+                Recover(old);
+            else
+                Discard(old);
+        }
         if (portable != null) {
-            if (portable.IsKey) {
-                Drop(old);
-            } else {
-                portable.bigIcon.SetActive(false);
-                portable.transform.parent = placeholder;
-                portable.transform.localPosition = Vector3.zero;
-                portable.smallIcon.SetActive(true);
-                portable.gameObject.SetActive(true);
-            }
+            portable.bigIcon.SetActive(false);
+            portable.transform.parent = placeholder;
+            portable.transform.localPosition = Vector3.zero;
+            portable.smallIcon.SetActive(true);
+            portable.gameObject.SetActive(true);
         }
         old = portable;
     }
 
     public void Drop(bool isTop) {
-        Debug.Log("dropping "+isTop);
-        if (isTop && top != null) 
-            Drop(ref top);
-        else if (!isTop && bottom != null) 
-            Drop(ref bottom);
+        if (isTop && top != null) {
+            Recover(top);
+            top = null;
+        }
+        else if (!isTop && bottom != null) {
+            Recover(bottom);
+            bottom = null;
+        }
     }
 
-    private void Drop(ref Portable value) {
-        Debug.Log("drop",value);
+    public void Discard(Portable value) {
+        value.gameObject.SetActive(false);
+    }
+
+    public void Recover(Portable value) {
         value.smallIcon.SetActive(false);
         value.transform.parent = null;
         value.transform.position = transform.position;
         value.bigIcon.SetActive(true);
         value.gameObject.SetActive(true);
-        value = null;
     }
 
 }
