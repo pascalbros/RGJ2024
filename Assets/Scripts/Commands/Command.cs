@@ -3,7 +3,7 @@ using UnityEngine;
 public interface Command 
 {
     
-    public void Do(GameObject gameObject);
+    public void Do(PlayerController controller);
 
-    public void Undo(GameObject gameObect);
+    public void Undo(PlayerController controller);
 }
