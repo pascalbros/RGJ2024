@@ -4,6 +4,7 @@ using System.Linq;
 
 public enum LevelTileType {
     NONE,
+    PLAYER,
     RIGHT,
     LEFT,
     RIGHTLEFT,
@@ -27,6 +28,7 @@ public class LevelGenerator: MonoBehaviour {
     public GameObject darkTile;
 
     [Header("Level objects")]
+    public GameObject playerObject;
     public GameObject rightObject;
     public GameObject leftObject;
     public GameObject rightLeftObject;
@@ -46,6 +48,7 @@ public class LevelGenerator: MonoBehaviour {
 
     private static readonly Dictionary<char, LevelTileType> CharToLevelTile = new() {
         { '.', LevelTileType.NONE },
+        { 'P', LevelTileType.PLAYER },
         { '>', LevelTileType.RIGHT },
         { '<', LevelTileType.LEFT },
         { '-', LevelTileType.RIGHTLEFT },
@@ -212,6 +215,9 @@ public class LevelGenerator: MonoBehaviour {
     private GameObject AddObjectToLevel(LevelTileType tile, Vector3 position, int x, int y) {
         GameObject currentObject;
         switch (tile) {
+            case LevelTileType.PLAYER:
+                currentObject = playerObject;
+                break;
             case LevelTileType.RIGHT:
                 currentObject = rightObject;
                 break;
