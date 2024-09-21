@@ -2,8 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectionPopup : MonoBehaviour
-{
+public class SelectionPopup: MonoBehaviour {
     public static SelectionPopup Instance { get; private set; }
     [SerializeField] float animDuration;
 
@@ -11,19 +10,18 @@ public class SelectionPopup : MonoBehaviour
     [SerializeField] Image bottomPortable;
     [SerializeField] Image candidatePortable;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        { Instance = this; }
+    public Image background;
+    public float backgroundOpacity = 0.5f;
+
+    private void Awake() {
+        if (Instance == null) { Instance = this; }
     }
 
     [ContextMenu("Show")]
-    void Show()
-    {
+    void Show() {
         Show(null, null, null, Vector3.zero);
     }
-    public void Show(Sprite topPortableSprite, Sprite bottomPortableSprite, Sprite candidatePortableSprite, Vector3 rotation)
-    {
+    public void Show(Sprite topPortableSprite, Sprite bottomPortableSprite, Sprite candidatePortableSprite, Vector3 rotation) {
         topPortable.sprite = topPortableSprite;
         topPortable.transform.localEulerAngles = rotation;
         bottomPortable.sprite = bottomPortableSprite;
@@ -31,10 +29,11 @@ public class SelectionPopup : MonoBehaviour
         candidatePortable.sprite = candidatePortableSprite;
 
         transform.DOLocalMove(new Vector3(0, 0, 0), animDuration).SetEase(Ease.InOutSine);
+        background.DOFade(backgroundOpacity, animDuration);
     }
     [ContextMenu("Hide")]
-    public void Hide()
-    {
+    public void Hide() {
         transform.DOLocalMove(new Vector3(0, -1080, 0), animDuration).SetEase(Ease.InOutSine);
+        background.DOFade(0f, animDuration);
     }
 }
