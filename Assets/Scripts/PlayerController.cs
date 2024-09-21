@@ -109,6 +109,8 @@ public class PlayerController: MonoBehaviour {
     public void HandleDiscard(Portable portable) => inventory.Discard(portable);
     public void HandleRecover(Portable portable) => inventory.Recover(portable);
     public void HandlePickupSelection(PickupSelection selection) {
+        if (state != State.PICKUP) 
+            return;
         switch (selection) {
             case PickupSelection.TOP:
                 HandlePickup(watinigForSelection, true);
@@ -124,6 +126,7 @@ public class PlayerController: MonoBehaviour {
                 }
                 break;
         }
+        SelectionPopup.Instance.Hide();
         watinigForSelection = null;
         state = State.GAME;
     }
@@ -163,14 +166,22 @@ public class PlayerController: MonoBehaviour {
         state = State.PICKUP;
         watinigForSelection = portable;
 
-        //TODO
 
+<<<<<<< Updated upstream
         //Selection selection = ShowSelectionMenu(
         //    TopPortable.bigIcon.Sprite,
         //    BottomPortable.bigIcon.Sprite,
         //    portable.bigIcon.Sprite,
         //    transform.rotation
         //);
+=======
+       SelectionPopup.Instance.Show(
+           TopPortable.bigIcon.GetComponent<SpriteRenderer>().sprite,
+           BottomPortable.bigIcon.GetComponent<SpriteRenderer>().sprite,
+           portable.bigIcon.GetComponent<SpriteRenderer>().sprite,
+           transform.eulerAngles
+       );
+>>>>>>> Stashed changes
 
     }
 }
