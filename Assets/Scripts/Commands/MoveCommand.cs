@@ -4,15 +4,16 @@ public class MoveCommand: Command
 {
     public Vector3 direction { get; private set; }
 
-    public MoveCommand(Vector2 direction) {
+    public MoveCommand(Portable source, Vector2 direction) {
+        this.source = source;
         this.direction = direction;
     }
     
-    public void Do(PlayerController controller) {
+    protected override void DoInner(PlayerController controller) {
         controller.ApplyMovement(direction);
     }
 
-    public void Undo(PlayerController controller) {
+    protected override void UndoInner(PlayerController controller) {
         controller.ApplyMovement(-direction);
     }
 } 

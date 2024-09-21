@@ -1,9 +1,26 @@
 using UnityEngine;
 
-public interface Command 
+public abstract class Command 
 {
-    
-    public void Do(PlayerController controller);
+    public Portable source;
 
-    public void Undo(PlayerController controller);
+    public int SourceUsages { get { source == null ? -1 : source.usages } }
+
+    public void Do(PlayerController controller) {
+        DoInner(controller);
+        if (source == null) return;
+        source.Use();
+        if (source.IsExausted)
+            controller.HandleConsumed(source);
+    }
+
+    public void Undo(PlayerController controller){
+        UndoInner(controller);
+        if (source == null) return;
+        source.UndoUsage();
+    }
+
+    protected abstract void DoInner(PlayerController controller);
+
+    protected abstract void UndoInner(PlayerController controller);
 }

@@ -14,11 +14,11 @@ public class ReflectCommand: Command {
         
     }
 
-    public void Do(PlayerController controller) {
+    protected override void DoInner(PlayerController controller) {
         controller.ApplyReflection(direction);
     }
 
-    public void Undo(PlayerController controller) {
+    protected override void UndoInner(PlayerController controller) {
         controller.ApplyReflection(direction);
         lastCommand.Undo(controller);
     }

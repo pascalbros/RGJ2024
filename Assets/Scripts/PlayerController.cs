@@ -88,6 +88,12 @@ public class PlayerController : MonoBehaviour
         cmd.Do(this);
         LastCommand = cmd;
     }
+    public void HandleConsumed(Portable portable) {
+        if (TopPortable == portable)
+            HandlePickup(null, true);
+        else if (BottomPortable == portable)
+            HandlePickup(null, false);
+    }
 
     public void ApplyMovement(Vector3 delta) {
         transform.position += Vector3.Scale(transform.TransformDirection(delta), movementMask).normalized;

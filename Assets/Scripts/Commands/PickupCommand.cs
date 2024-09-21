@@ -18,14 +18,14 @@ public class PickupCommand : Command
             oldBottom = controller.BottomPortable;
     }
 
-    public void Do(PlayerController controller) {
+    protected override void DoInner(PlayerController controller) {
         if (atTop) 
             controller.TopPortable = pickedUp;
         else
             controller.BottomPortable = pickedUp;
     }
 
-    public void Undo(PlayerController controller) {
+    protected override void UndoInner(PlayerController controller) {
         if (atTop) {
             //TODO drop old top
             Debug.Log("Drop top", controller.TopPortable);

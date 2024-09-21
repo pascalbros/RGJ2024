@@ -13,7 +13,7 @@ public class Movement: Portable {
         if (!right && movement.x > 0.5) return null;
         if (!left && movement.x < -0.5) return null;
 
-        return new MoveCommand(movement.normalized);
+        return new MoveCommand(this, movement.normalized);
     }
 
 }
