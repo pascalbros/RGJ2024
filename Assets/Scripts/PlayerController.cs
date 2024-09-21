@@ -1,13 +1,12 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController: MonoBehaviour {
     private enum State { GAME, BUSY, PICKUP }
 
     State state = State.GAME;
     Portable watinigForSelection;
 
-    private Vector3 movementMask = new Vector3(1,1,0);
+    private Vector3 movementMask = new Vector3(1, 1, 0);
 
     InputHandler inputHandler;
     private InventoryManager inventory;
@@ -20,21 +19,18 @@ public class PlayerController : MonoBehaviour
     // last player input in global space
     public Vector2 LastMovement { get; private set; }
 
-    private void Awake()
-    {
+    private void Awake() {
         inputHandler = GetComponent<InputHandler>();
         inventory = GetComponent<InventoryManager>();
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         inputHandler.OnMove += HandleMove;
         inputHandler.OnUndo += HandleUndo;
         inputHandler.OnAction += HandleAction;
         inputHandler.OnSelectPickup += HandlePickupSelection;
     }
-    private void OnDisable()
-    {
+    private void OnDisable() {
         inputHandler.OnMove -= HandleMove;
         inputHandler.OnUndo -= HandleUndo;
         inputHandler.OnAction -= HandleAction;
@@ -46,8 +42,7 @@ public class PlayerController : MonoBehaviour
         inventory.SetBottom(bottom);
     }
 
-    public void HandleMove(Vector2 input)
-    {
+    public void HandleMove(Vector2 input) {
         if (state != State.GAME) return;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, input, 1, LayerMask.GetMask("Wall"));
         if (hit.collider != null && hit.collider.gameObject.tag == "Wall")
@@ -71,27 +66,23 @@ public class PlayerController : MonoBehaviour
         cmd.Do(this);
         return true;
     }
-    public void HandleAction()
-    {
+    public void HandleAction() {
         if (state != State.GAME) return;
         Command topCommand = TopPortable?.GetAction();
 
-        if (topCommand != null)
-        {
+        if (topCommand != null) {
             LastCommand = topCommand;
             topCommand.Do(this);
             return;
         }
 
         Command bottomCommand = BottomPortable?.GetAction();
-        if (bottomCommand != null)
-        {
+        if (bottomCommand != null) {
             LastCommand = bottomCommand;
             bottomCommand.Do(this);
         }
     }
-    public void HandleUndo()
-    {
+    public void HandleUndo() {
         if (state != State.GAME) return;
         if (LastCommand == null)
             return;
@@ -134,7 +125,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
         watinigForSelection = null;
-        state = State.GAME;        
+        state = State.GAME;
     }
 
     public void ApplyMovement(Vector3 delta) {
@@ -142,7 +133,11 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 0.4f, LayerMask.GetMask("Portable"));
         if (hit.collider != null) {
             Portable portable = hit.collider.transform.parent.GetComponent<Portable>();
-            if (portable != null) TryToPickup(portable);
+            if (portable != null) {
+                TryToPickup(portable);
+            } else if (hit.collider.transform.TryGetComponent<ExitController>(out var exit)) {
+                exit.OnExit();
+            }
         }
     }
 
@@ -151,7 +146,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ApplyReflection(Vector2 direction) {
-        Debug.Log("reflect "+direction);
+        Debug.Log("reflect " + direction);
         transform.Rotate(direction * 180);
     }
 
@@ -170,12 +165,12 @@ public class PlayerController : MonoBehaviour
 
         //TODO
 
-       //Selection selection = ShowSelectionMenu(
-       //    TopPortable.bigIcon.Sprite,
-       //    BottomPortable.bigIcon.Sprite,
-       //    portable.bigIcon.Sprite,
-       //    transform.rotation
-       //);
+        //Selection selection = ShowSelectionMenu(
+        //    TopPortable.bigIcon.Sprite,
+        //    BottomPortable.bigIcon.Sprite,
+        //    portable.bigIcon.Sprite,
+        //    transform.rotation
+        //);
 
     }
 }
