@@ -12,21 +12,25 @@ public class InventoryManager : MonoBehaviour
     public Portable top;
     public Portable bottom;
 
+    public UsageManager topUsage;
+    public UsageManager bottomUsage;
+
     public bool HasKey { get { return (top?.IsKey ?? false) || (bottom?.IsKey ?? false); } }
     void Awake() {
         controller = GetComponent<PlayerController>();
     }
 
     public void SetTop(Portable value) {
-        SetPortable(value, topIcon, ref top);
+        SetPortable(value, topIcon, topUsage, ref top);
     }
 
     public void SetBottom(Portable value) {
-        SetPortable(value, bottomIcon, ref bottom);
+        SetPortable(value, bottomIcon, bottomUsage, ref bottom);
     }
 
-    private void SetPortable(Portable portable, Transform placeholder, ref Portable old) {
+    private void SetPortable(Portable portable, Transform placeholder, UsageManager usageManager, ref Portable old) {
         if (old != null) {
+            old.usageManager = null;
             if (old.IsKey)
                 Recover(old);
             else
@@ -43,15 +47,18 @@ public class InventoryManager : MonoBehaviour
             portable.smallVertIcon.SetActive(!horiz);
             portable.gameObject.SetActive(true);
         }
+        usageManager.SetPortable(portable);
         old = portable;
     }
 
     public void Drop(bool isTop) {
         if (isTop && top != null) {
+            topUsage.SetPortable(null);
             Recover(top);
             top = null;
         }
         else if (!isTop && bottom != null) {
+            bottomUsage.SetPortable(null);
             Recover(bottom);
             bottom = null;
         }
