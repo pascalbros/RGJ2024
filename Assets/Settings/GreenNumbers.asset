@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a182928c0cbf3ce4bb5d860e6f20d5c7, type: 3}
+  m_Name: GreenNumbers
+  m_EditorClassIdentifier: 
+  numbers:
+  - {fileID: 21300000, guid: 4a53fda405a71a04c8255d2f40fb23c4, type: 3}
+  - {fileID: 21300000, guid: 6f4966e26b15fc743a33df3cfb9e3ea9, type: 3}
+  - {fileID: 21300000, guid: 5808498d637d7ff4587f4c857a6dec25, type: 3}
+  - {fileID: 21300000, guid: 920d768da3f28a749b657bac92e58a82, type: 3}
+  - {fileID: 21300000, guid: 92016c3d58ecd1e4fbb248b54715d38f, type: 3}
+  - {fileID: 21300000, guid: 87ec5e7c057f0eb45ae39919efd895c9, type: 3}
+  - {fileID: 21300000, guid: 9bf160ac19d163f4a9368e543fd7a9f3, type: 3}
+  - {fileID: 21300000, guid: 46351073d82c54643a7a244b1ed92019, type: 3}
+  - {fileID: 21300000, guid: 60b2bf32d508f9d42a0c2e59ee82a24a, type: 3}
+  - {fileID: 21300000, guid: 139dabec512a41843a20f059de9204ee, type: 3}

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a182928c0cbf3ce4bb5d860e6f20d5c7, type: 3}
+  m_Name: BlackNumbers
+  m_EditorClassIdentifier: 
+  numbers:
+  - {fileID: 21300000, guid: c89d1373725b65543b7490254f121827, type: 3}
+  - {fileID: 21300000, guid: 7aea162a5bd7c0c4fa4de36c25e7457f, type: 3}
+  - {fileID: 21300000, guid: 3c031b27ab394ab469f48a577e1df142, type: 3}
+  - {fileID: 21300000, guid: b14f969d30d94bc48b0195efe7d6d4d1, type: 3}
+  - {fileID: 21300000, guid: 556abb7dd02e8b341b4318742ee8e95f, type: 3}
+  - {fileID: 21300000, guid: a517dd2f362470346b5778d8cbc7aa63, type: 3}
+  - {fileID: 21300000, guid: 5e1d265b1c0fbf34b83e783d4e37976e, type: 3}
+  - {fileID: 21300000, guid: 8a606c0ab04541d40b40e873c593c082, type: 3}
+  - {fileID: 21300000, guid: ea620c6b074965a478b2c2b6b0ff68f2, type: 3}
+  - {fileID: 21300000, guid: 0b023652b281f3d47bf6907909ed3e39, type: 3}
