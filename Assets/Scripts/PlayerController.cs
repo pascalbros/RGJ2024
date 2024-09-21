@@ -34,10 +34,14 @@ public class PlayerController : MonoBehaviour
         inputHandler.OnAction -= HandleAction;
     }
 
+    public void InitPortables(Portable top, Portable bottom) {
+        inventory.SetTop(top);
+        inventory.SetBottom(bottom);
+    }
+
     public void HandleMove(Vector2 input)
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, input, 1, LayerMask.GetMask("Wall"));
-        Debug.Log("hit "+hit.collider?.gameObject?.tag, hit.collider);
         if (hit.collider != null && hit.collider.gameObject.tag == "Wall")
             return;
 

@@ -11,6 +11,11 @@ public class Debugger : MonoBehaviour
     [ContextMenuItem("Pickup", "Pickup")]
     public Portable bottom;
 
+    [ContextMenu("Init")]
+    public void Init() {
+        controller.InitPortables(top, bottom);
+    }
+
     [ContextMenu("Pickup")]
     public void Pickup() {
         controller.HandlePickup(top, true);
