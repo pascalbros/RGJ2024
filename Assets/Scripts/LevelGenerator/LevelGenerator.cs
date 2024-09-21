@@ -4,6 +4,8 @@ using System.Linq;
 
 public enum LevelTileType {
     NONE,
+    NUMBER_1 = 1, NUMBER_2 = 2, NUMBER_3 = 3, NUMBER_4 = 4, NUMBER_5 = 5, NUMBER_6 = 6, NUMBER_7 = 7, NUMBER_8 = 8, NUMBER_9 = 9,
+    PLAYER,
     RIGHT,
     LEFT,
     RIGHTLEFT,
@@ -17,7 +19,6 @@ public enum LevelTileType {
     WALL,
     MIRROR,
     WARP,
-    NUMBER_1 = 1, NUMBER_2 = 2, NUMBER_3 = 3, NUMBER_4 = 4, NUMBER_5 = 5, NUMBER_6 = 6, NUMBER_7 = 7, NUMBER_8 = 8, NUMBER_9 = 9
 }
 
 public class LevelGenerator: MonoBehaviour {
@@ -27,6 +28,7 @@ public class LevelGenerator: MonoBehaviour {
     public GameObject darkTile;
 
     [Header("Level objects")]
+    public GameObject playerObject;
     public GameObject rightObject;
     public GameObject leftObject;
     public GameObject rightLeftObject;
@@ -44,8 +46,11 @@ public class LevelGenerator: MonoBehaviour {
     [Header("Background objects")]
     public GameObject borderObject;
 
+    private PlayerController currentPlayer;
+
     private static readonly Dictionary<char, LevelTileType> CharToLevelTile = new() {
         { '.', LevelTileType.NONE },
+        { 'P', LevelTileType.PLAYER },
         { '>', LevelTileType.RIGHT },
         { '<', LevelTileType.LEFT },
         { '-', LevelTileType.RIGHTLEFT },
@@ -67,7 +72,7 @@ public class LevelGenerator: MonoBehaviour {
         DrawCheckboard(size.Item1, size.Item2, lightTile, darkTile);
         DrawLevel();
         DrawBorder(size.Item1, size.Item2);
-        Debug.Log(GetInitialObjectsFromLevel(level.text));
+        DrawInitialObjects();
     }
 
     public static LevelTileType[,] ParseLevel(string level) {
@@ -126,7 +131,7 @@ public class LevelGenerator: MonoBehaviour {
         startPosition.y -= (tileSize.y * height * 0.5f) - tileSize.y * 0.5f;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                Vector3 position = new(startPosition.x + tileSize.x * x, startPosition.y + tileSize.y * y, startPosition.z);
+                Vector3 position = new(startPosition.x + tileSize.x * x, startPosition.y + tileSize.y * (height - 1 - y), startPosition.z);
                 int number = NumberFromTileType(level[y, x]);
                 if (number != -1) {
                     if (lastObject != null) {
@@ -135,7 +140,13 @@ public class LevelGenerator: MonoBehaviour {
                     }
                     continue;
                 }
-                lastObject = AddObjectToLevel(level[y, x], position, x, y);
+                lastObject = AddObjectToLevel(level[y, x], position, x, height - 1 - y);
+                if (lastObject) {
+                    var player = lastObject.GetComponentInChildren<PlayerController>();
+                    if (player) {
+                        currentPlayer = player;
+                    }
+                }
             }
         }
     }
@@ -177,6 +188,16 @@ public class LevelGenerator: MonoBehaviour {
         }
     }
 
+    public void DrawInitialObjects() {
+        if (!currentPlayer) {
+            return;
+        }
+        var objects = GetInitialObjectsFromLevel(level.text);
+        var portable1 = AddObjectToLevel(objects.Item1, Vector3.zero, 0, 0);
+        var portable2 = AddObjectToLevel(objects.Item2, Vector3.zero, 0, 0);
+        currentPlayer.InitPortables(portable1.GetComponent<Portable>(), portable2.GetComponent<Portable>());
+    }
+
     public static (LevelTileType, LevelTileType) GetInitialObjectsFromLevel(string level) {
         string[] rows = level
             .Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries)
@@ -209,9 +230,12 @@ public class LevelGenerator: MonoBehaviour {
         return tileInstance;
     }
 
-    private GameObject AddObjectToLevel(LevelTileType tile, Vector3 position, int x, int y) {
+    private GameObject GameObjectFromTile(LevelTileType tile) {
         GameObject currentObject;
         switch (tile) {
+            case LevelTileType.PLAYER:
+                currentObject = playerObject;
+                break;
             case LevelTileType.RIGHT:
                 currentObject = rightObject;
                 break;
@@ -253,6 +277,14 @@ public class LevelGenerator: MonoBehaviour {
                 break;
             default:
                 return null;
+        }
+        return currentObject;
+    }
+
+    private GameObject AddObjectToLevel(LevelTileType tile, Vector3 position, int x, int y) {
+        GameObject currentObject = GameObjectFromTile(tile);
+        if (!currentObject) {
+            return null;
         }
         return CreateTile(position, $"{currentObject.name} ({x}, {y})", currentObject);
     }
