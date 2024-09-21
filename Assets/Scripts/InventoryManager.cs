@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
-{
+public class InventoryManager: MonoBehaviour {
     private PlayerController controller;
 
     public Transform topIcon;
@@ -26,9 +25,9 @@ public class InventoryManager : MonoBehaviour
     }
 
     private void SetPortable(Portable portable, Transform placeholder, ref Portable old) {
-        Debug.Log("old",old);
-        Debug.Log("new",portable);
-        if (old != null) 
+        Debug.Log("old", old);
+        Debug.Log("new", portable);
+        if (old != null)
             old.gameObject.SetActive(false);
         if (portable != null) {
             if (portable.IsKey) {
@@ -45,15 +44,15 @@ public class InventoryManager : MonoBehaviour
     }
 
     public void Drop(bool isTop) {
-        Debug.Log("dropping "+isTop);
-        if (isTop && top != null) 
+        Debug.Log("dropping " + isTop);
+        if (isTop && top != null)
             Drop(ref top);
-        else if (!isTop && bottom != null) 
+        else if (!isTop && bottom != null)
             Drop(ref bottom);
     }
 
     private void Drop(ref Portable value) {
-        Debug.Log("drop",value);
+        Debug.Log("drop", value);
         value.smallIcon.SetActive(false);
         value.transform.parent = null;
         value.transform.position = transform.position;
