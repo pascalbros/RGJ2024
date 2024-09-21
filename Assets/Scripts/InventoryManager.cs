@@ -36,7 +36,10 @@ public class InventoryManager : MonoBehaviour
             portable.bigIcon.SetActive(false);
             portable.transform.parent = placeholder;
             portable.transform.localPosition = Vector3.zero;
-            portable.smallIcon.SetActive(true);
+            var zRotation = Mathf.Abs(transform.eulerAngles.z % 360);
+            bool horiz = Mathf.Approximately(zRotation, 0f) || Mathf.Approximately(zRotation, 180f);
+            portable.smallIcon.SetActive(horiz);
+            portable.smallVertIcon.SetActive(!horiz);
             portable.gameObject.SetActive(true);
         }
         old = portable;
@@ -59,6 +62,7 @@ public class InventoryManager : MonoBehaviour
 
     public void Recover(Portable value) {
         value.smallIcon.SetActive(false);
+        value.smallVertIcon.SetActive(false);
         value.transform.parent = null;
         value.transform.position = transform.position;
         value.bigIcon.SetActive(true);

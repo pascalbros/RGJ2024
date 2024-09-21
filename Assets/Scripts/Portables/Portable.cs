@@ -6,10 +6,12 @@ public class Portable: MonoBehaviour {
 
     public GameObject bigIcon;
     public GameObject smallIcon;
+    public GameObject smallVertIcon;
 
     void Awake() {
         bigIcon = transform.Find("Big").gameObject;
         smallIcon = transform.Find("Icon").gameObject;
+        smallVertIcon = transform.Find("VertIcon").gameObject;
     }
 
     public void SetUsages(int value) {
