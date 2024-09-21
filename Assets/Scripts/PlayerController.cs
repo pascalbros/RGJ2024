@@ -19,6 +19,11 @@ public class PlayerController: MonoBehaviour {
     // last player input in global space
     public Vector2 LastMovement { get; private set; }
 
+    public bool IsRotated { get {
+        var zRotation = Mathf.Abs(transform.eulerAngles.z % 180);
+        return Mathf.Approximately(zRotation, 90f);
+    }}
+
     private void Awake() {
         inputHandler = GetComponent<InputHandler>();
         inventory = GetComponent<InventoryManager>();
@@ -151,6 +156,7 @@ public class PlayerController: MonoBehaviour {
 
     public void ApplyReflection(Vector2 direction) {
         Debug.Log("reflect " + direction);
+        if (IsRotated) direction = new Vector2(direction.y, direction.x);
         transform.Rotate(direction * 180);
     }
 

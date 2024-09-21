@@ -176,10 +176,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rotate acw
       objectReference: {fileID: 0}
-    - target: {fileID: 5557609940024032262, guid: 94fa7b37b422c4640a5a324ef182df23, type: 3}
-      propertyPath: clockwise
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5578193218376947988, guid: 94fa7b37b422c4640a5a324ef182df23, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
@@ -1098,10 +1094,6 @@ PrefabInstance:
     - target: {fileID: 2637828710535405226, guid: eb6b760fab4948e4a8cca5f09baac75a, type: 3}
       propertyPath: m_Name
       value: Rotate cw
-      objectReference: {fileID: 0}
-    - target: {fileID: 5557609940024032262, guid: eb6b760fab4948e4a8cca5f09baac75a, type: 3}
-      propertyPath: clockwise
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5578193218376947988, guid: eb6b760fab4948e4a8cca5f09baac75a, type: 3}
       propertyPath: m_LocalPosition.x
