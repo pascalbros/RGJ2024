@@ -11,6 +11,7 @@ public class PickupCommand : Command
     public PickupCommand(Portable pickedUp, bool atTop, PlayerController controller) {
         this.pickedUp = pickedUp;
         lastCommand = controller.LastCommand;
+        this.atTop = atTop; 
         if (atTop)
             oldTop = controller.TopPortable;
         else

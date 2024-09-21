@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private Vector3 movementMask = new Vector3(1,1,0);
+
     InputHandler inputHandler;
 
     public Portable TopPortable { get; set; }
@@ -30,7 +32,7 @@ public class PlayerController : MonoBehaviour
         inputHandler.OnAction -= HandleAction;
     }
 
-    void HandleMove(Vector2 input)
+    public void HandleMove(Vector2 input)
     {
         var localInput = transform.InverseTransformDirection(input);
         Command topCommand = TopPortable?.CanMove(localInput);
@@ -51,7 +53,7 @@ public class PlayerController : MonoBehaviour
             bottomCommand.Do(this);
         }
     }
-    void HandleAction()
+    public void HandleAction()
     {
         Command topCommand = TopPortable?.GetAction();
 
@@ -69,7 +71,7 @@ public class PlayerController : MonoBehaviour
             bottomCommand.Do(this);
         }
     }
-    void HandleUndo()
+    public void HandleUndo()
     {
         if (LastCommand == null)
             return;
@@ -81,17 +83,23 @@ public class PlayerController : MonoBehaviour
         cmd.Do(this);
         LastCommand = cmd;
     }
+    public void HandlePickup(Portable portable, bool atTop) {
+        var cmd = new PickupCommand(portable, atTop, this);
+        cmd.Do(this);
+        LastCommand = cmd;
+    }
 
     public void ApplyMovement(Vector3 delta) {
-        transform.position += delta;
+        transform.position += Vector3.Scale(transform.TransformDirection(delta), movementMask).normalized;
     }
 
     public void ApplyRotation(Vector3 angle) {
         transform.Rotate(angle);
     }
 
-    public void ApplyReflection() {
-        transform.Rotate(new Vector3(0, 180, 0));
+    public void ApplyReflection(Vector2 direction) {
+        Debug.Log("reflect "+direction);
+        transform.Rotate(direction * 180);
     }
 
 }

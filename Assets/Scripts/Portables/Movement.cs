@@ -1,15 +1,20 @@
 using UnityEngine;
 
 public class Movement: Portable {
-    public Vector2 direction;
+    public bool up;
+    public bool right;
+    public bool down;
+    public bool left;
 
     public override MoveCommand CanMove(Vector2 movement)
     {
-        var filtered = (direction * movement);
-        if (filtered.sqrMagnitude < 0.01)
-            return null;
+        Debug.Log(movement);
+        if (!up && movement.y > 0.5) return null;
+        if (!down && movement.y < -0.5) return null;
+        if (!right && movement.x > 0.5) return null;
+        if (!left && movement.x < -0.5) return null;
 
-        return new MoveCommand(filtered.normalized);
+        return new MoveCommand(movement.normalized);
     }
 
 }
