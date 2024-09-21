@@ -54,7 +54,12 @@ public class LevelGenerator: MonoBehaviour {
     [Header("Background objects")]
     public GameObject borderObject;
 
+    [Header("Other")]
+    public TextAsset[] levels;
+
     private PlayerController currentPlayer;
+
+    public static int currentLevel = 0;
 
     private static readonly Dictionary<char, LevelTileType> CharToLevelTile = new() {
         { '.', LevelTileType.NONE },
@@ -80,6 +85,12 @@ public class LevelGenerator: MonoBehaviour {
 
 
     private void Start() {
+        if (currentLevel >= levels.Length) {
+            currentLevel = 0;
+        }
+        if (level == null) {
+            level = levels[currentLevel];
+        }
         var size = SizeFromLevel(level.text);
         DrawCheckboard(size.Item1, size.Item2, lightTile, darkTile);
         DrawLevel();
@@ -207,7 +218,9 @@ public class LevelGenerator: MonoBehaviour {
         var objects = GetInitialObjectsFromLevel(level.text);
         var portable1 = AddObjectToLevel(objects.Item1, Vector3.zero, 0, 0);
         var portable2 = AddObjectToLevel(objects.Item2, Vector3.zero, 0, 0);
-        currentPlayer.InitPortables(portable1.GetComponent<Portable>(), portable2.GetComponent<Portable>());
+        var p1 = portable1 != null ? portable1.GetComponent<Portable>() : null;
+        var p2 = portable2 != null ? portable2.GetComponent<Portable>() : null;
+        currentPlayer.InitPortables(p1, p2);
     }
 
     public static (LevelTileType, LevelTileType) GetInitialObjectsFromLevel(string level) {

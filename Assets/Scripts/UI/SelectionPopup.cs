@@ -4,11 +4,18 @@ using UnityEngine.UI;
 
 public class SelectionPopup : MonoBehaviour
 {
+    public static SelectionPopup Instance { get; private set; }
     [SerializeField] float animDuration;
 
     [SerializeField] Image topPortable;
     [SerializeField] Image bottomPortable;
-    [SerializeField] Image[] candidatePortable;
+    [SerializeField] Image candidatePortable;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        { Instance = this; }
+    }
 
     [ContextMenu("Show")]
     void Show()
@@ -21,10 +28,7 @@ public class SelectionPopup : MonoBehaviour
         topPortable.transform.localEulerAngles = rotation;
         bottomPortable.sprite = bottomPortableSprite;
         bottomPortable.transform.localEulerAngles = rotation;
-        for (int i = 0; i < candidatePortable.Length; i++)
-        {
-            candidatePortable[i].sprite = candidatePortableSprite;
-        }
+        candidatePortable.sprite = candidatePortableSprite;
 
         transform.DOLocalMove(new Vector3(0, 0, 0), animDuration).SetEase(Ease.InOutSine);
     }
