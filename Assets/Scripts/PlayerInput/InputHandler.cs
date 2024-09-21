@@ -48,7 +48,7 @@ public class InputHandler : MonoBehaviour
     }
     Vector2 FixMovementInput(InputAction.CallbackContext context)
     {
-        Vector2 value = context.ReadValue<Vector2>();
+        Vector2 value = context.ReadValue<Vector2>().normalized;
         if (Mathf.Abs(value.x) == Mathf.Abs(value.y))
         {
             value = Vector2.zero;
