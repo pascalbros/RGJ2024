@@ -17,16 +17,15 @@ public class SelectionPopup: MonoBehaviour {
         if (Instance == null) { Instance = this; }
     }
 
-    [ContextMenu("Show")]
-    void Show() {
-        Show(null, null, null, Vector3.zero);
-    }
-    public void Show(Sprite topPortableSprite, Sprite bottomPortableSprite, Sprite candidatePortableSprite, Vector3 rotation) {
-        topPortable.sprite = topPortableSprite;
-        topPortable.transform.localEulerAngles = rotation;
-        bottomPortable.sprite = bottomPortableSprite;
-        bottomPortable.transform.localEulerAngles = rotation;
-        candidatePortable.sprite = candidatePortableSprite;
+    public void Show(SpriteRenderer topPortableSprite, SpriteRenderer bottomPortableSprite, SpriteRenderer candidatePortableSprite) {
+        topPortable.sprite = topPortableSprite.sprite;
+        topPortable.transform.rotation = topPortableSprite.transform.rotation;
+
+        bottomPortable.sprite = bottomPortableSprite.sprite;
+        bottomPortable.transform.rotation = bottomPortableSprite.transform.rotation;
+
+        candidatePortable.sprite = candidatePortableSprite.sprite;
+        candidatePortable.transform.rotation = candidatePortableSprite.transform.rotation;
 
         transform.DOLocalMove(new Vector3(0, 0, 0), animDuration).SetEase(Ease.InOutSine);
         background.DOFade(backgroundOpacity, animDuration);

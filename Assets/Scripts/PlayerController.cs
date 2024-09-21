@@ -172,10 +172,9 @@ public class PlayerController: MonoBehaviour {
         watinigForSelection = portable;
 
         SelectionPopup.Instance.Show(
-            TopPortable.bigIcon.GetComponent<SpriteRenderer>().sprite,
-            BottomPortable.bigIcon.GetComponent<SpriteRenderer>().sprite,
-            portable.bigIcon.GetComponent<SpriteRenderer>().sprite,
-            transform.eulerAngles
+            TopPortable.bigIcon.GetComponent<SpriteRenderer>(),
+            BottomPortable.bigIcon.GetComponent<SpriteRenderer>(),
+            portable.bigIcon.GetComponent<SpriteRenderer>()
         );
     }
 }
