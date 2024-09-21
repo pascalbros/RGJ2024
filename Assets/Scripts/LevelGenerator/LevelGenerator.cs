@@ -54,6 +54,9 @@ public class LevelGenerator: MonoBehaviour {
     [Header("Background objects")]
     public GameObject borderObject;
 
+    [Header("Other")]
+    public TextAsset[] levels;
+
     private PlayerController currentPlayer;
 
     public static int currentLevel = 0;
@@ -82,6 +85,12 @@ public class LevelGenerator: MonoBehaviour {
 
 
     private void Start() {
+        if (currentLevel >= levels.Length) {
+            currentLevel = 0;
+        }
+        if (level == null) {
+            level = levels[currentLevel];
+        }
         var size = SizeFromLevel(level.text);
         DrawCheckboard(size.Item1, size.Item2, lightTile, darkTile);
         DrawLevel();

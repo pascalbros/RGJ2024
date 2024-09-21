@@ -222,9 +222,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 1.429229
-    width: 0.7953368
-    height: 0.7944912
+    y: 1.3499999
+    width: 0.7506113
+    height: 0.7504487
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61934ae4bba6949a08ffd60eebe339cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: {fileID: 4900000, guid: dc331a08178ae43f8a46fcc55ccf3f51, type: 3}
+  level: {fileID: 0}
   lightTile: {fileID: 7358754548138934854, guid: ee038468b08ce4e59b2de1c48fb96980, type: 3}
   darkTile: {fileID: 4034585667932154010, guid: c4797f0f96c3d4368b588e04b21bc951, type: 3}
   playerObject: {fileID: 7360551012750339769, guid: 6525c5e4c2c0c7549a4fe15b3a6b24ab, type: 3}
@@ -417,6 +417,10 @@ MonoBehaviour:
   mirrorObject: {fileID: 0}
   warpObject: {fileID: 0}
   borderObject: {fileID: 5485928670405292481, guid: 7e977d212d0eb49319a086363df14907, type: 3}
+  levels:
+  - {fileID: 4900000, guid: 4282087a08eaa42a59a80e585004f44d, type: 3}
+  - {fileID: 4900000, guid: dc331a08178ae43f8a46fcc55ccf3f51, type: 3}
+  - {fileID: 4900000, guid: 369d85cb4391f40c7913ee8d41bb5f58, type: 3}
 --- !u!4 &1700773009
 Transform:
   m_ObjectHideFlags: 0
