@@ -221,10 +221,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 1.429229
-    width: 0.7953368
-    height: 0.7944912
+    x: 0.07462686
+    y: 0
+    width: 2.1078281
+    height: 2.1061008
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -401,12 +401,16 @@ MonoBehaviour:
   playerObject: {fileID: 7360551012750339769, guid: 6525c5e4c2c0c7549a4fe15b3a6b24ab, type: 3}
   rightObject: {fileID: 2637828710535405226, guid: e2965adccad03ea42b383fb2cede18ec, type: 3}
   leftObject: {fileID: 2637828710535405226, guid: 36cdc84c0b80e5c48a44a90c265fc3d5, type: 3}
-  rightLeftObject: {fileID: 0}
+  rightLeftObject: {fileID: 2637828710535405226, guid: c1e395bea96cd43fbaa59a175e1f4bf0, type: 3}
   upObject: {fileID: 2637828710535405226, guid: 8cdd2a9d918a5cb45a5b97d0cd59f111, type: 3}
   downObject: {fileID: 2637828710535405226, guid: 8d91fbfdc61edd2408b1e95d997d45aa, type: 3}
-  upDownObject: {fileID: 0}
+  upDownObject: {fileID: 2637828710535405226, guid: 5167abdda96494bb1bd664400670f00f, type: 3}
+  upLeftObject: {fileID: 2637828710535405226, guid: 41fa6e42d1090434ebb0d0759234bdb2, type: 3}
+  upRightObject: {fileID: 2637828710535405226, guid: 7f863fb4b9ce24138a5c36515358f397, type: 3}
+  downLeftObject: {fileID: 2637828710535405226, guid: 4d7f72539b9774749b66343f46e0072a, type: 3}
+  downRightObject: {fileID: 2637828710535405226, guid: 3bf26852956c44c308d0d84344c23764, type: 3}
   rotateObject: {fileID: 2637828710535405226, guid: eb6b760fab4948e4a8cca5f09baac75a, type: 3}
-  rotateCounterObject: {fileID: 0}
+  rotateCounterObject: {fileID: 2637828710535405226, guid: 94fa7b37b422c4640a5a324ef182df23, type: 3}
   doorObject: {fileID: 0}
   keyObject: {fileID: 0}
   wallObject: {fileID: 5485928670405292481, guid: 7e977d212d0eb49319a086363df14907, type: 3}

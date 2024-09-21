@@ -9,6 +9,10 @@ public enum LevelTileType {
     RIGHT,
     LEFT,
     RIGHTLEFT,
+    UPLEFT,
+    UPRIGHT,
+    DOWNLEFT,
+    DOWNRIGHT,
     UP,
     DOWN,
     UPDOWN,
@@ -35,6 +39,10 @@ public class LevelGenerator: MonoBehaviour {
     public GameObject upObject;
     public GameObject downObject;
     public GameObject upDownObject;
+    public GameObject upLeftObject;
+    public GameObject upRightObject;
+    public GameObject downLeftObject;
+    public GameObject downRightObject;
     public GameObject rotateObject;
     public GameObject rotateCounterObject;
     public GameObject doorObject;
@@ -57,6 +65,10 @@ public class LevelGenerator: MonoBehaviour {
         { '^', LevelTileType.UP },
         { 'V', LevelTileType.DOWN },
         { '|', LevelTileType.UPDOWN },
+        { 'J', LevelTileType.UPLEFT },
+        { 'L', LevelTileType.UPRIGHT },
+        { 'T', LevelTileType.DOWNLEFT },
+        { 'F', LevelTileType.DOWNRIGHT },
         { '@', LevelTileType.ROTATE_CLOCKWISE },
         { 'G', LevelTileType.ROTATE_COUNTERCLOCKWISE },
         { 'D', LevelTileType.DOOR },
@@ -253,6 +265,18 @@ public class LevelGenerator: MonoBehaviour {
                 break;
             case LevelTileType.UPDOWN:
                 currentObject = upDownObject;
+                break;
+            case LevelTileType.UPLEFT:
+                currentObject = upLeftObject;
+                break;
+            case LevelTileType.UPRIGHT:
+                currentObject = upRightObject;
+                break;
+            case LevelTileType.DOWNLEFT:
+                currentObject = downLeftObject;
+                break;
+            case LevelTileType.DOWNRIGHT:
+                currentObject = downRightObject;
                 break;
             case LevelTileType.ROTATE_CLOCKWISE:
                 currentObject = rotateObject;
