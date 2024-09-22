@@ -7,35 +7,28 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
     
     AudioSource audioSource;
-    [SerializeField] AudioClip menuClip;
+    [SerializeField] AudioClip[] audioClips;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
+        audioClips = Resources.LoadAll<AudioClip>("Music");
     }
 
     private void Start()
     {
-        Play(Track.Menu);
+        StartCoroutine(C_PlayAllSequence());
     }
 
-    public void Play(Track track)
+    IEnumerator C_PlayAllSequence()
     {
-        switch (track)
+        for (int i = 0; i < audioClips.Length; i++)
         {
-            case Track.Menu:
-                audioSource.PlayOneShot(menuClip);
-                break;
-            case Track.Game:
-                break;
+            audioSource.PlayOneShot(audioClips[i]);
+            yield return new WaitForSeconds(audioClips[i].length);
         }
+        StartCoroutine(C_PlayAllSequence());
     }
 
-}
-
-public enum Track
-{
-    Menu,
-    Game
 }
