@@ -366,6 +366,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4473762553396688299, guid: be53adafe2fa0004d8be071b45f99002, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -71
+      objectReference: {fileID: 0}
     - target: {fileID: 5044516526646263261, guid: be53adafe2fa0004d8be071b45f99002, type: 3}
       propertyPath: m_Name
       value: SelectionPopupCanvas
