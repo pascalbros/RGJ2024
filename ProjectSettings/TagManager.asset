@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - Portable
+  - Mirror
   layers:
   - Default
   - TransparentFX

@@ -140,8 +140,9 @@ public class PlayerController: MonoBehaviour {
         transform.position += delta;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 0.4f, LayerMask.GetMask("Portable"));
         if (hit.collider != null) {
-            Portable portable = hit.collider.transform.parent.GetComponent<Portable>();
-            if (portable != null) {
+            if (hit.collider.transform.tag == "Mirror") {
+                HandleReflection();
+            } else if (hit.collider.transform.parent.TryGetComponent<Portable>(out var portable)) {
                 TryToPickup(portable);
             } else if (hit.collider.transform.TryGetComponent<ExitController>(out var exit)) {
                 exit.OnExit();
