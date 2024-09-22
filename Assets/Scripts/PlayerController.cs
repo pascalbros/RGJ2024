@@ -173,6 +173,8 @@ public class PlayerController: MonoBehaviour {
                 }
             }
 
+            transform.position = new Vector3(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), transform.position.z);
+
             if (state == State.BUSY) 
                 state = State.GAME;
         });
