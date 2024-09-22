@@ -221,10 +221,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.25885418
+    x: 0.165625
     y: 0
-    width: 0.27883983
-    height: 0.2787037
+    width: 0.24664818
+    height: 0.24652779
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -476,29 +476,29 @@ PrefabInstance:
       value: LevelGenerator
       objectReference: {fileID: 0}
     - target: {fileID: 2305093533504659838, guid: eb118910e0f129448b1783517d86ed50, type: 3}
-      propertyPath: levels.Array.size
-      value: 8
+      propertyPath: level
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2305093533504659838, guid: eb118910e0f129448b1783517d86ed50, type: 3}
       propertyPath: levels.Array.data[3]
       value: 
-      objectReference: {fileID: 4900000, guid: a63defaf0fac7974498fc15ce0cc4294, type: 3}
+      objectReference: {fileID: 4900000, guid: 37dc3ef210f3f43998ef030bb1c6b79b, type: 3}
     - target: {fileID: 2305093533504659838, guid: eb118910e0f129448b1783517d86ed50, type: 3}
       propertyPath: levels.Array.data[4]
       value: 
-      objectReference: {fileID: 4900000, guid: 37dc3ef210f3f43998ef030bb1c6b79b, type: 3}
+      objectReference: {fileID: 4900000, guid: 1622c861cf91348778320b48c5346e21, type: 3}
     - target: {fileID: 2305093533504659838, guid: eb118910e0f129448b1783517d86ed50, type: 3}
       propertyPath: levels.Array.data[5]
       value: 
-      objectReference: {fileID: 4900000, guid: 1622c861cf91348778320b48c5346e21, type: 3}
+      objectReference: {fileID: 4900000, guid: a5e834e9a5a4ea84c9a32b03b906ad7b, type: 3}
     - target: {fileID: 2305093533504659838, guid: eb118910e0f129448b1783517d86ed50, type: 3}
       propertyPath: levels.Array.data[6]
       value: 
-      objectReference: {fileID: 4900000, guid: a5e834e9a5a4ea84c9a32b03b906ad7b, type: 3}
+      objectReference: {fileID: 4900000, guid: aefc36eae4b56de4388f3814998fd7f8, type: 3}
     - target: {fileID: 2305093533504659838, guid: eb118910e0f129448b1783517d86ed50, type: 3}
       propertyPath: levels.Array.data[7]
       value: 
-      objectReference: {fileID: 4900000, guid: aefc36eae4b56de4388f3814998fd7f8, type: 3}
+      objectReference: {fileID: 4900000, guid: a63defaf0fac7974498fc15ce0cc4294, type: 3}
     - target: {fileID: 8922348160021367500, guid: eb118910e0f129448b1783517d86ed50, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
