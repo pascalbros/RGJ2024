@@ -51,7 +51,7 @@ public class InputHandler : MonoBehaviour
                 case "PutBottom":
                     OnSelectPickup.Invoke(PickupSelection.BOTTOM);
                     break;
-                case "DiscardSelection":
+                case "DiscardPortable":
                     OnSelectPickup.Invoke(PickupSelection.DISCARD);
                     break;
                 case "Panic":

@@ -8,6 +8,8 @@ public class Portable: MonoBehaviour {
     public GameObject smallIcon;
     public GameObject smallVertIcon;
 
+    public UsageManager usageManager;
+
     void Awake() {
         bigIcon = transform.Find("Big").gameObject;
         smallIcon = transform.Find("Icon").gameObject;
@@ -20,10 +22,12 @@ public class Portable: MonoBehaviour {
 
     public void Use() {
         if (usages > 0) usages--;
+        if (usageManager != null) usageManager.UpdateCounter();
     }
 
     public void UndoUsage() {
         if (usages >= 0) usages++;
+        if (usageManager != null) usageManager.UpdateCounter();
     }
 
     public bool IsConsumable { get { return usages >= 0; } }
