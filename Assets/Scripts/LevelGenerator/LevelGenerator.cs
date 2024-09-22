@@ -160,6 +160,7 @@ public class LevelGenerator: MonoBehaviour {
                     if (lastObject != null) {
                         // Add number of actions to the gameobject
                         Debug.Log(lastObject.name + " " + number);
+                        lastObject.GetComponent<Portable>().SetUsages(number);
                     }
                     continue;
                 }
@@ -219,16 +220,22 @@ public class LevelGenerator: MonoBehaviour {
         var portable1 = AddObjectToLevel(objects.Item1, Vector3.zero, 0, 0);
         var portable2 = AddObjectToLevel(objects.Item2, Vector3.zero, 0, 0);
         var p1 = portable1 != null ? portable1.GetComponent<Portable>() : null;
+        if (p1 != null) {
+            p1.SetUsages(objects.Item3);
+        }
         var p2 = portable2 != null ? portable2.GetComponent<Portable>() : null;
+        if (p2 != null) {
+            p2.SetUsages(objects.Item4);
+        }
         currentPlayer.InitPortables(p1, p2);
     }
 
-    public static (LevelTileType, LevelTileType) GetInitialObjectsFromLevel(string level) {
+    public static (LevelTileType, LevelTileType, int, int) GetInitialObjectsFromLevel(string level) {
         string[] rows = level
             .Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries)
             .Select(row => new string(
                 row.Trim()
-                .Where(x => !char.IsWhiteSpace(x) && !char.IsDigit(x)).ToArray()))
+                .Where(x => !char.IsWhiteSpace(x)).ToArray()))
             .ToArray();
         List<string> rowsList = new();
 
@@ -243,9 +250,13 @@ public class LevelGenerator: MonoBehaviour {
             }
         }
         if (rowsList.Count != 2) {
-            return (LevelTileType.NONE, LevelTileType.NONE);
+            return (LevelTileType.NONE, LevelTileType.NONE, -1, -1);
         }
-        return (LevelTileFromChar(rowsList[0].ToCharArray()[0]), LevelTileFromChar(rowsList[1].ToCharArray()[0]));
+        var firstList = rowsList[0].ToCharArray();
+        var secondList = rowsList[1].ToCharArray();
+        var firstCount = firstList.Length > 1 ? firstList[1] - '0' : -1;
+        var secondCount = secondList.Length > 1 ? secondList[1] - '0' : -1;
+        return (LevelTileFromChar(firstList[0]), LevelTileFromChar(secondList[0]), firstCount, secondCount);
     }
 
     private GameObject CreateTile(Vector3 position, string name, GameObject tile) {
