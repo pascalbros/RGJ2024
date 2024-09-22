@@ -355,6 +355,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10bc72007d241d94a97ecb19a5c54544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationAnimDuration: 0.2
+  movementAnimDuration: 0.2
+  reflectionAnimDuration: 0.15
+  rotationAnimEase: 4
+  movementAnimEase: 4
+  reflectionAnimEase: 1
 --- !u!114 &5807506207515055559
 MonoBehaviour:
   m_ObjectHideFlags: 0
