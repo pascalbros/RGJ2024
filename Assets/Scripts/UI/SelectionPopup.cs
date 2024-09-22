@@ -20,12 +20,15 @@ public class SelectionPopup: MonoBehaviour {
     public void Show(SpriteRenderer topPortableSprite, SpriteRenderer bottomPortableSprite, SpriteRenderer candidatePortableSprite) {
         topPortable.sprite = topPortableSprite.sprite;
         topPortable.transform.rotation = topPortableSprite.transform.rotation;
+        topPortable.transform.localScale = new Vector3(topPortableSprite.flipX ? -1 : 1, topPortableSprite.flipY ? -1 : 1, 1);
 
         bottomPortable.sprite = bottomPortableSprite.sprite;
         bottomPortable.transform.rotation = bottomPortableSprite.transform.rotation;
+        bottomPortable.transform.localScale = new Vector3(bottomPortableSprite.flipX ? -1 : 1, bottomPortableSprite.flipY ? -1 : 1, 1);
 
         candidatePortable.sprite = candidatePortableSprite.sprite;
         candidatePortable.transform.rotation = candidatePortableSprite.transform.rotation;
+        candidatePortable.transform.localScale = new Vector3(candidatePortableSprite.flipX ? -1 : 1, candidatePortableSprite.flipY ? -1 : 1, 1);
 
         transform.DOLocalMove(new Vector3(0, 0, 0), animDuration).SetEase(Ease.InOutSine);
         background.DOFade(backgroundOpacity, animDuration);
