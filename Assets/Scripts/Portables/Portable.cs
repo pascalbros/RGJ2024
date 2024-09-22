@@ -14,10 +14,13 @@ public class Portable: MonoBehaviour {
         bigIcon = transform.Find("Big").gameObject;
         smallIcon = transform.Find("Icon").gameObject;
         smallVertIcon = transform.Find("VertIcon").gameObject;
+        usageManager = GetComponent<UsageManager>();
+        if (usageManager != null) usageManager.UpdateCounter();
     }
 
     public void SetUsages(int value) {
         usages = value;
+        if (usageManager != null) usageManager.UpdateCounter();
     }
 
     public void Use() {

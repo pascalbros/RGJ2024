@@ -7,17 +7,18 @@ public abstract class Command
     public int SourceUsages { get { return source == null ? -1 : source.usages; } }
 
     public void Do(PlayerController controller) {
+        if (source != null) {
+            source.Use();
+            if (source.IsExausted)
+                controller.HandleConsumed(source);
+        }
         DoInner(controller);
-        if (source == null) return;
-        source.Use();
-        if (source.IsExausted)
-            controller.HandleConsumed(source);
     }
 
     public void Undo(PlayerController controller){
         UndoInner(controller);
-        if (source == null) return;
-        source.UndoUsage();
+        if (source != null)
+            source.UndoUsage();
     }
 
     protected abstract void DoInner(PlayerController controller);

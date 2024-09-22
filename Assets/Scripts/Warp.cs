@@ -7,19 +7,22 @@ public class Warp : MonoBehaviour
     public Warp destination;
 
     void Awake() {
+        Setup();
+    }
+
+    private void Setup() {
+        if (destination != null) return;
         var warps = GameObject.FindGameObjectsWithTag("Warp");
-        Debug.Log(warps);
-        Debug.Log(warps[0]);
-        Debug.Log(warps[1]);
-        GameObject destGo;
+        GameObject destGo = null;
         if (warps[0] != this.gameObject) 
             destGo = warps[0];
-        else
+        else if (warps.Length > 1)
             destGo = warps[1];
-        destination = destGo.GetComponent<Warp>();
+        destination = destGo?.GetComponent<Warp>();
     }
 
     public Command GetCommand(PlayerController controller) {
+        Setup();
         return new WarpCommand(this, destination, controller);
     }
 }
