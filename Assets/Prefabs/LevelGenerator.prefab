@@ -65,7 +65,7 @@ MonoBehaviour:
   keyObject: {fileID: 0}
   wallObject: {fileID: 5485928670405292481, guid: 7e977d212d0eb49319a086363df14907, type: 3}
   mirrorObject: {fileID: 55831051616230354, guid: 3d7ca293b861be8458e8f61e218b72fd, type: 3}
-  warpObject: {fileID: 0}
+  warpObject: {fileID: 8412103099471877963, guid: db80c289ca57c3d42a025ec54755d99b, type: 3}
   borderObject: {fileID: 5485928670405292481, guid: c56b41b7cf719ac49a38236154ef9219, type: 3}
   levels:
   - {fileID: 4900000, guid: dc331a08178ae43f8a46fcc55ccf3f51, type: 3}
