@@ -5,7 +5,7 @@ using System;
 public class PlayerController: MonoBehaviour {
     private enum State { GAME, BUSY, PICKUP, EXIT }
 
-    [SerializeField] float rotationAnimDuration, movementAnimDuration, reflectionAnimDuration;
+    [SerializeField] float rotationAnimDuration, movementAnimDuration, reflectionAnimDuration, warpAnimDuration;
     [SerializeField] Ease rotationAnimEase, movementAnimEase, reflectionAnimEase;
 
     State state = State.GAME;
@@ -213,7 +213,12 @@ public class PlayerController: MonoBehaviour {
 
 
     public void ApplyWarp(Vector3 destination) {
-        transform.position = destination;
+        state = State.BUSY;
+        transform.DOScale(Vector3.zero, warpAnimDuration/2).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            transform.position = destination;
+            transform.DOScale(Vector3.one, warpAnimDuration/2).SetEase(Ease.Linear).OnComplete(() => state = State.GAME);
+        });
     }
 
     public void UndoWarp(Vector3 destination) {
