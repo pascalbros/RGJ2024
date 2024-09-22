@@ -57,6 +57,10 @@ public class InputHandler : MonoBehaviour
                 case "Panic":
                     SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
                     break;
+                case "Reset":
+                    string currentSceneName = SceneManager.GetActiveScene().name;
+                    SceneTransitionManager.Instance.ChangeScene(currentSceneName);
+                    break;
             }
         }
     }

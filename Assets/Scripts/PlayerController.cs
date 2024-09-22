@@ -187,8 +187,8 @@ public class PlayerController: MonoBehaviour {
     }
 
     public void ApplyReflection(Vector2 direction) {
-        if (IsRotated) direction = new Vector2(direction.y, direction.x);
-        transform.DORotate(direction * 180, reflectionAnimDuration).SetEase(reflectionAnimEase).OnComplete(() => state = State.GAME);
+        //if (IsRotated) direction = new Vector2(direction.y, direction.x);
+        transform.DORotate(transform.eulerAngles + (Vector3)(direction * 180), reflectionAnimDuration).SetEase(reflectionAnimEase).OnComplete(() => state = State.GAME);
     }
 
     public void TryToPickup(Portable portable) {

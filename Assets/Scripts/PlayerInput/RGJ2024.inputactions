@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Reset",
+                    "type": "Button",
+                    "id": "24d70d48-6e96-4214-9f4c-a38e3191885d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -331,6 +340,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "DiscardPortable",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d5d6e95-3647-4374-aca0-4151843fdd1f",
+                    "path": "<Keyboard>/r",
+                    "interactions": "Hold(duration=0.4)",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Reset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
