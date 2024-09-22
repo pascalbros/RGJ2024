@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fe2c996a915964281c12a05d91c5cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites: {fileID: 11400000, guid: ff2fcbb776d631045ba7474a39d54528, type: 2}
+  sprites: {fileID: 11400000, guid: 6cb4e82ab5e981049bcf67e79a314acc, type: 2}
   portable: {fileID: 0}
   numRenderer: {fileID: 2522371024313569908}
 --- !u!1 &7360551012750339769
@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fe2c996a915964281c12a05d91c5cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites: {fileID: 11400000, guid: ff2fcbb776d631045ba7474a39d54528, type: 2}
+  sprites: {fileID: 11400000, guid: 6cb4e82ab5e981049bcf67e79a314acc, type: 2}
   portable: {fileID: 0}
   numRenderer: {fileID: 7948000941881283106}
 --- !u!1 &9160381355129622403
