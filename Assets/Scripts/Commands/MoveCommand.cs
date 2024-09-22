@@ -14,6 +14,6 @@ public class MoveCommand: Command
     }
 
     protected override void UndoInner(PlayerController controller) {
-        controller.ApplyMovement(-direction);
+        controller.UndoMovement(direction);
     }
 } 

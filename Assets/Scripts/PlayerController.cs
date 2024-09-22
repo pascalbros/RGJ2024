@@ -1,8 +1,9 @@
 using DG.Tweening;
 using UnityEngine;
+using System;
 
 public class PlayerController: MonoBehaviour {
-    private enum State { GAME, BUSY, PICKUP }
+    private enum State { GAME, BUSY, PICKUP, EXIT }
 
     [SerializeField] float rotationAnimDuration, movementAnimDuration, reflectionAnimDuration;
     [SerializeField] Ease rotationAnimEase, movementAnimEase, reflectionAnimEase;
@@ -140,6 +141,10 @@ public class PlayerController: MonoBehaviour {
         state = State.GAME;
     }
 
+    public void UndoMovement(Vector3 delta) {
+        transform.position -= delta;
+    }
+
     public void ApplyMovement(Vector3 delta) {
         state = State.BUSY;
         transform.DOMove(transform.position + delta, movementAnimDuration).SetEase(movementAnimEase).OnComplete(() =>
@@ -151,12 +156,19 @@ public class PlayerController: MonoBehaviour {
                 {
                     HandleReflection();
                 }
-                else if (hit.collider.transform.parent.TryGetComponent<Portable>(out var portable))
+                else if (hit.collider.transform.parent?.TryGetComponent<Portable>(out var portable) ?? false)
                 {
                     TryToPickup(portable);
                 }
+                else if (hit.collider.transform.TryGetComponent<Warp>(out var warp))
+                {
+                    var cmd = warp.GetCommand(this);
+                    cmd.Do(this);
+                    LastCommand = cmd;
+                }
                 else if (hit.collider.transform.TryGetComponent<ExitController>(out var exit))
                 {
+                    state = State.EXIT;
                     exit.OnExit();
                 }
             }
@@ -169,7 +181,9 @@ public class PlayerController: MonoBehaviour {
 
     public void ApplyRotation(Vector3 angle) {
         state = State.BUSY;
-        transform.DORotate(angle, rotationAnimDuration).SetEase(rotationAnimEase).OnComplete(() => state = State.GAME);
+        transform.DORotate(transform.localEulerAngles + angle, rotationAnimDuration)
+                .SetEase(rotationAnimEase)
+                .OnComplete(() => state = State.GAME);
     }
 
     public void ApplyReflection(Vector2 direction) {
@@ -195,5 +209,14 @@ public class PlayerController: MonoBehaviour {
             BottomPortable.bigIcon.GetComponent<SpriteRenderer>(),
             portable.bigIcon.GetComponent<SpriteRenderer>()
         );
+    }
+
+
+    public void ApplyWarp(Vector3 destination) {
+        transform.position = destination;
+    }
+
+    public void UndoWarp(Vector3 destination) {
+        transform.position = destination;
     }
 }

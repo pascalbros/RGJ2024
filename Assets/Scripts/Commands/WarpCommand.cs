@@ -1,19 +1,23 @@
+using UnityEngine;
+using System;
 
 public class WarpCommand: Command {
+    private Vector3 wsource;
     private Vector3 destination;
     private Command lastCommand;
 
-    public WarpCommand(Vector3 destination, PlayerController controller) {
+    public WarpCommand(Warp source, Warp destination, PlayerController controller) {
         lastCommand = controller.LastCommand;
-        this.destination = destination;        
+        this.wsource = source.transform.position;        
+        this.destination = destination.transform.position;        
     }
 
     protected override void DoInner(PlayerController controller) {
-        controller.ApplyReflection(direction);
+        controller.ApplyWarp(destination);
     }
 
     protected override void UndoInner(PlayerController controller) {
-        controller.ApplyReflection(direction);
+        controller.UndoWarp(wsource);
         lastCommand.Undo(controller);
     }
 }
