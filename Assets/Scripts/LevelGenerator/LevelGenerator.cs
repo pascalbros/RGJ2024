@@ -101,7 +101,9 @@ public class LevelGenerator: MonoBehaviour {
     public static LevelTileType[,] ParseLevel(string level) {
         string[] rows = level
         .Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries)
-        .Select(row => new string(row.Trim().Where(x => !char.IsWhiteSpace(x)).ToArray()))
+        .Select(row => new string(
+            row.Trim()
+            .Where(x => !char.IsWhiteSpace(x) && !char.IsDigit(x)).ToArray()))
         .ToArray();
         List<string> rowsList = new();
         foreach (string row in rows) {
@@ -119,6 +121,51 @@ public class LevelGenerator: MonoBehaviour {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 parsedLevel[y, x] = LevelTileFromChar(rows[y][x]);
+            }
+        }
+
+        return parsedLevel;
+    }
+
+    public static LevelTileType[,] ParseNumbers(string level) {
+        string[] rows = level
+        .Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries)
+        .Select(row => new string(row.Trim().Where(x => !char.IsWhiteSpace(x)).ToArray()))
+        .ToArray();
+        List<string> oldRowsList = new();
+        foreach (string row in rows) {
+            if (row == "!") {
+                rows = oldRowsList.ToArray();
+                break;
+            }
+            oldRowsList.Add(row);
+        }
+
+        List<string> rowsList = new();
+        foreach (var row in oldRowsList) {
+            List<int> indexes = new();
+            char[] cRow = row.ToCharArray();
+            string sRow = "";
+            for (int i = 0; i < cRow.Length; i++) {
+                if (char.IsDigit(cRow[i])) {
+                    sRow = sRow.Remove(sRow.Length - 1) + cRow[i];
+                } else {
+                    sRow += ".";
+                }
+            }
+            rowsList.Add(sRow);
+            //Debug.Log(sRow);
+        }
+
+        int width = rowsList[0].Length;
+        int height = rowsList.Count;
+
+        LevelTileType[,] parsedLevel = new LevelTileType[height, width];
+        for (int y = 0; y < height; y++) {
+            char[] currentRow = rowsList[y].ToArray();
+            for (int x = 0; x < width; x++) {
+                var tile = LevelTileFromChar(currentRow[x]);
+                parsedLevel[y, x] = LevelTileFromChar(currentRow[x]);
             }
         }
 
@@ -144,6 +191,7 @@ public class LevelGenerator: MonoBehaviour {
     }
 
     private void DrawLevel() {
+        LevelTileType[,] numbers = ParseNumbers(this.level.text);
         LevelTileType[,] level = ParseLevel(this.level.text);
         GameObject lastObject = null;
         int width = level.GetLength(1);
@@ -155,16 +203,16 @@ public class LevelGenerator: MonoBehaviour {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 Vector3 position = new(startPosition.x + tileSize.x * x, startPosition.y + tileSize.y * (height - 1 - y), startPosition.z);
-                int number = NumberFromTileType(level[y, x]);
+                var number = NumberFromTileType(numbers[y, x]);
+                //Debug.Log(number + " " + x + y + "<-");
+                lastObject = AddObjectToLevel(level[y, x], position, x, height - 1 - y);
                 if (number != -1) {
                     if (lastObject != null) {
                         // Add number of actions to the gameobject
-                        Debug.Log(lastObject.name + " " + number);
                         lastObject.GetComponent<Portable>().SetUsages(number);
                     }
                     continue;
                 }
-                lastObject = AddObjectToLevel(level[y, x], position, x, height - 1 - y);
                 if (lastObject) {
                     var player = lastObject.GetComponentInChildren<PlayerController>();
                     if (player) {

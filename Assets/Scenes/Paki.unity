@@ -319,7 +319,7 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.575
+    y: 0.5092592
     width: 0.31979167
     height: 0.31963557
   near clip plane: 0.3
@@ -492,7 +492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61934ae4bba6949a08ffd60eebe339cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: {fileID: 0}
+  level: {fileID: 4900000, guid: 4282087a08eaa42a59a80e585004f44d, type: 3}
   lightTile: {fileID: 7358754548138934854, guid: ee038468b08ce4e59b2de1c48fb96980, type: 3}
   darkTile: {fileID: 4034585667932154010, guid: c4797f0f96c3d4368b588e04b21bc951, type: 3}
   playerObject: {fileID: 7360551012750339769, guid: 6525c5e4c2c0c7549a4fe15b3a6b24ab, type: 3}
