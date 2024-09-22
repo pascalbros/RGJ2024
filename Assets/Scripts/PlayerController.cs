@@ -1,7 +1,11 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerController: MonoBehaviour {
     private enum State { GAME, BUSY, PICKUP }
+
+    [SerializeField] float rotationAnimDuration, movementAnimDuration, reflectionAnimDuration;
+    [SerializeField] Ease rotationAnimEase, movementAnimEase, reflectionAnimEase;
 
     State state = State.GAME;
     Portable watinigForSelection;
@@ -137,26 +141,40 @@ public class PlayerController: MonoBehaviour {
     }
 
     public void ApplyMovement(Vector3 delta) {
-        transform.position += delta;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 0.4f, LayerMask.GetMask("Portable"));
-        if (hit.collider != null) {
-            if (hit.collider.transform.tag == "Mirror") {
-                HandleReflection();
-            } else if (hit.collider.transform.parent.TryGetComponent<Portable>(out var portable)) {
-                TryToPickup(portable);
-            } else if (hit.collider.transform.TryGetComponent<ExitController>(out var exit)) {
-                exit.OnExit();
+        state = State.BUSY;
+        transform.DOMove(transform.position + delta, movementAnimDuration).SetEase(movementAnimEase).OnComplete(() =>
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 0.4f, LayerMask.GetMask("Portable"));
+            if (hit.collider != null)
+            {
+                if (hit.collider.transform.tag == "Mirror")
+                {
+                    HandleReflection();
+                }
+                else if (hit.collider.transform.parent.TryGetComponent<Portable>(out var portable))
+                {
+                    TryToPickup(portable);
+                }
+                else if (hit.collider.transform.TryGetComponent<ExitController>(out var exit))
+                {
+                    exit.OnExit();
+                }
             }
-        }
+
+            if (state == State.BUSY) 
+                state = State.GAME;
+        });
+
     }
 
     public void ApplyRotation(Vector3 angle) {
-        transform.Rotate(angle);
+        state = State.BUSY;
+        transform.DORotate(angle, rotationAnimDuration).SetEase(rotationAnimEase).OnComplete(() => state = State.GAME);
     }
 
     public void ApplyReflection(Vector2 direction) {
         if (IsRotated) direction = new Vector2(direction.y, direction.x);
-        transform.Rotate(direction * 180);
+        transform.DORotate(direction * 180, reflectionAnimDuration).SetEase(reflectionAnimEase).OnComplete(() => state = State.GAME);
     }
 
     public void TryToPickup(Portable portable) {
