@@ -1020,7 +1020,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4b61e434361e0e44d9613500b1ff6f4d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 118c843c420f9af448d727d362f0626d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1915,7 +1915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef35a2cfbb38a94680df5bc91aa363e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuClip: {fileID: 8300000, guid: f8ce55f3f42a03048aac2d0a61c58836, type: 3}
+  audioClips: []
 --- !u!4 &2129786841
 Transform:
   m_ObjectHideFlags: 0
