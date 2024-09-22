@@ -358,6 +358,7 @@ MonoBehaviour:
   rotationAnimDuration: 0.2
   movementAnimDuration: 0.2
   reflectionAnimDuration: 0.15
+  warpAnimDuration: 0.4
   rotationAnimEase: 4
   movementAnimEase: 4
   reflectionAnimEase: 1
