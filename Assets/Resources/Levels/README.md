@@ -16,7 +16,7 @@ A number after an object indicates how many times that object can be used, other
 |`-`|Right & left|
 |`^`|Up|
 |`V`|Down|
-|`|`|Up & down|
+|`&#124;`|Up & down|
 |`J`|Up & left|
 |`L`|Up & right|
 |`T`|Down & left|
