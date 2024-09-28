@@ -4,6 +4,7 @@ Every non-numeric character in the file is an element in the level (spaces are i
 A number after an object indicates how many times that object can be used, otherwise it can be used forever.
 
 |Char|Meaning|
+|--|--|
 |`.`|Empty|
 |`P`|Player starting point|
 |`E`|Exit|
