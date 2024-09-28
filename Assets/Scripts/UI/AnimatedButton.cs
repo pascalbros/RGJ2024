@@ -16,31 +16,31 @@ public class AnimatedButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("OnPointerClick");
+        //Debug.Log("OnPointerClick");
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("OnPointerDown");
+        //Debug.Log("OnPointerDown");
         transform.DOScale(clickAnimScale, clickAnimDuration / 2).SetEase(Ease.InSine);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("OnPointerEnter");
+        //Debug.Log("OnPointerEnter");
         transform.DOScale(hoverAnimScale, hoverAnimDuration / 2);
 
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("OnPointerExit");
+        //Debug.Log("OnPointerExit");
         transform.DOScale(1f, hoverAnimDuration / 2);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("OnPointerUp");
+        //Debug.Log("OnPointerUp");
         transform.DOScale(1f, clickAnimScale / 2).SetEase(Ease.OutSine).OnComplete(() => onClick.Invoke());
     }
 }

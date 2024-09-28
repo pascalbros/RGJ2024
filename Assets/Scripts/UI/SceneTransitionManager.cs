@@ -20,7 +20,10 @@ public class SceneTransitionManager : MonoBehaviour
             DontDestroyOnLoad(this);
         }
         else
+        {
+            gameObject.SetActive(false);
             Destroy(this);
+        }
     }
     public void ChangeScene(string sceneName)
     {

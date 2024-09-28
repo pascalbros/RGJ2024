@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class LevelSelectionButton : MonoBehaviour
 {
@@ -8,5 +11,34 @@ public class LevelSelectionButton : MonoBehaviour
     {
         LevelGenerator.currentLevel = level;
         SceneTransitionManager.Instance.ChangeScene("LevelTest");
+    }
+
+    public void LoadUrl(TMP_InputField inputField)
+    {
+        LoadUrl(inputField.text);
+    }
+
+    public void LoadUrl(string url)
+    {
+        Debug.Log(url);
+        StartCoroutine(LoadUrlAsync(url));
+    }
+
+    IEnumerator LoadUrlAsync(string url)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            string level = www.downloadHandler.text;
+            Debug.Log(level);
+            LevelGenerator.levelContent = level;
+            SceneTransitionManager.Instance.ChangeScene("LevelTest");
+        }
     }
 }

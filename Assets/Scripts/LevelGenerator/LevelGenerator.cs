@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public enum LevelTileType {
     NONE,
@@ -28,6 +29,7 @@ public enum LevelTileType {
 public class LevelGenerator: MonoBehaviour {
 
     public TextAsset level;
+    public static string levelContent;
     public GameObject lightTile;
     public GameObject darkTile;
 
@@ -85,17 +87,24 @@ public class LevelGenerator: MonoBehaviour {
 
 
     private void Start() {
-        if (currentLevel >= levels.Length) {
+        if (currentLevel >= levels.Length || currentLevel < 0) {
             currentLevel = 0;
         }
         if (level == null) {
             level = levels[currentLevel];
+        } 
+        if (levelContent == null || levelContent.Length == 0) {
+            levelContent = level.text;
+        } else {
+            level = null;
+            currentLevel = -1;
         }
-        var size = SizeFromLevel(level.text);
+        var size = SizeFromLevel(levelContent);
         DrawCheckboard(size.Item1, size.Item2, lightTile, darkTile);
         DrawLevel();
         DrawBorder(size.Item1, size.Item2);
         DrawInitialObjects();
+        levelContent = null;
     }
 
     public static LevelTileType[,] ParseLevel(string level) {
@@ -191,8 +200,8 @@ public class LevelGenerator: MonoBehaviour {
     }
 
     private void DrawLevel() {
-        LevelTileType[,] numbers = ParseNumbers(this.level.text);
-        LevelTileType[,] level = ParseLevel(this.level.text);
+        LevelTileType[,] numbers = ParseNumbers(levelContent);
+        LevelTileType[,] level = ParseLevel(levelContent);
         GameObject lastObject = null;
         int width = level.GetLength(1);
         int height = level.GetLength(0);
@@ -264,7 +273,7 @@ public class LevelGenerator: MonoBehaviour {
         if (!currentPlayer) {
             return;
         }
-        var objects = GetInitialObjectsFromLevel(level.text);
+        var objects = GetInitialObjectsFromLevel(levelContent);
         var portable1 = AddObjectToLevel(objects.Item1, Vector3.zero, 0, 0);
         var portable2 = AddObjectToLevel(objects.Item2, Vector3.zero, 0, 0);
         var p1 = portable1 != null ? portable1.GetComponent<Portable>() : null;
