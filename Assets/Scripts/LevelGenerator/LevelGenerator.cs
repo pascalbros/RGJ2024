@@ -199,16 +199,28 @@ public class LevelGenerator: MonoBehaviour {
         return (rows[0].Length, rows.Length);
     }
 
+    private Vector3 GetStartPosition(int width, int height)
+    {
+        Vector3 ts;
+        return GetStartPosition(width, height, out ts);
+    }
+    private Vector3 GetStartPosition(int width, int height, out Vector3 tileSize)
+    {
+        Vector3 startPosition = Vector3.zero;
+        tileSize = lightTile.GetComponent<SpriteRenderer>().bounds.size;
+        startPosition.x -= Mathf.Round((tileSize.x * width * 0.5f) - tileSize.x * 0.5f);
+        startPosition.y -= Mathf.Round((tileSize.y * height * 0.5f) - tileSize.y * 0.5f);
+        return startPosition;
+    }
+
     private void DrawLevel() {
         LevelTileType[,] numbers = ParseNumbers(levelContent);
         LevelTileType[,] level = ParseLevel(levelContent);
         GameObject lastObject = null;
         int width = level.GetLength(1);
         int height = level.GetLength(0);
-        Vector3 startPosition = Vector3.zero;
-        var tileSize = lightTile.GetComponent<SpriteRenderer>().bounds.size;
-        startPosition.x -= (tileSize.x * width * 0.5f) - tileSize.x * 0.5f;
-        startPosition.y -= (tileSize.y * height * 0.5f) - tileSize.y * 0.5f;
+        Vector3 tileSize;
+        Vector3 startPosition = GetStartPosition(width, height, out tileSize);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 Vector3 position = new(startPosition.x + tileSize.x * x, startPosition.y + tileSize.y * (height - 1 - y), startPosition.z);
@@ -233,10 +245,8 @@ public class LevelGenerator: MonoBehaviour {
     }
 
     private void DrawCheckboard(int width, int height, GameObject lightTile, GameObject darkTile) {
-        Vector3 startPosition = Vector3.zero;
-        var tileSize = lightTile.GetComponent<SpriteRenderer>().bounds.size;
-        startPosition.x -= (tileSize.x * width * 0.5f) - tileSize.x * 0.5f;
-        startPosition.y -= (tileSize.y * height * 0.5f) - tileSize.y * 0.5f;
+        Vector3 tileSize;
+        Vector3 startPosition = GetStartPosition(width, height, out tileSize);
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 GameObject tileToPlace = (x + y) % 2 == 0 ? lightTile : darkTile;
@@ -247,24 +257,23 @@ public class LevelGenerator: MonoBehaviour {
     }
 
     public void DrawBorder(int width, int height) {
-        Vector3 startPosition = Vector3.zero;
-        var tileSize = lightTile.GetComponent<SpriteRenderer>().bounds.size.x;
-        startPosition.x -= (tileSize * width * 0.5f) + tileSize * 0.5f;
-        startPosition.y -= (tileSize * height * 0.5f) + tileSize * 0.5f;
+        Vector3 tileSize;
+        Vector3 startPosition = GetStartPosition(width, height, out tileSize);
+        startPosition -= tileSize;
 
         for (int x = 0; x < width + 2; x++) {
-            var topPosition = new Vector3(x * tileSize, (height + 1) * tileSize, 0) + startPosition;
+            var topPosition = new Vector3(x * tileSize.x, (height + 1) * tileSize.x, 0) + startPosition;
             CreateTile(topPosition, "Top", borderObject);
-            var bottomPosition = new Vector3(x * tileSize, 0, 0) + startPosition;
+            var bottomPosition = new Vector3(x * tileSize.x, 0, 0) + startPosition;
             CreateTile(bottomPosition, "Bottom", borderObject);
         }
 
-        startPosition.y += tileSize;
+        startPosition.y += tileSize.y;
 
         for (int y = 0; y < height; y++) {
-            Vector3 leftPosition = new Vector3(0, y * tileSize, 0) + startPosition;
+            Vector3 leftPosition = new Vector3(0, y * tileSize.y, 0) + startPosition;
             CreateTile(leftPosition, "Left", borderObject);
-            Vector3 rightPosition = new Vector3((width + 1) * tileSize, y * tileSize, 0) + startPosition;
+            Vector3 rightPosition = new Vector3((width + 1) * tileSize.y, y * tileSize.y, 0) + startPosition;
             CreateTile(rightPosition, "Right", borderObject);
         }
     }

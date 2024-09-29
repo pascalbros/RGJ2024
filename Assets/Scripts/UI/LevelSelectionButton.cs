@@ -13,6 +13,18 @@ public class LevelSelectionButton : MonoBehaviour
         SceneTransitionManager.Instance.ChangeScene("LevelTest");
     }
 
+    public void LoadString(TMP_InputField inputField)
+    {
+        LoadString(inputField.text);
+    }
+
+    public void LoadString(string level)
+    {
+        Debug.Log(level);
+        LevelGenerator.levelContent = level.ToUpper();
+        SceneTransitionManager.Instance.ChangeScene("LevelTest");
+    }
+
     public void LoadUrl(TMP_InputField inputField)
     {
         LoadUrl(inputField.text);
@@ -35,10 +47,7 @@ public class LevelSelectionButton : MonoBehaviour
         }
         else
         {
-            string level = www.downloadHandler.text;
-            Debug.Log(level);
-            LevelGenerator.levelContent = level;
-            SceneTransitionManager.Instance.ChangeScene("LevelTest");
+            LoadString(www.downloadHandler.text);
         }
     }
 }
