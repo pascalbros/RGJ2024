@@ -41,5 +41,5 @@ P . # # E
 G2
 ```
 In this level the player start at the bottom left angle of the level, starting with the right arrow and conterclockwise rotation with 2 uses.
-The end is in the bottom right angle. In the to left angle there is a mirror and next to it there is a left arrow.
+The end is in the bottom right angle. In the top left angle there is a mirror and next to it there is a left arrow.
 Near the end there is a clockwise rotation with a single use.
