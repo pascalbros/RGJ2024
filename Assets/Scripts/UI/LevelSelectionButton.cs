@@ -21,6 +21,7 @@ public class LevelSelectionButton : MonoBehaviour
     public void LoadString(string level)
     {
         Debug.Log(level);
+        LevelGenerator.currentLevel = -1;
         LevelGenerator.levelContent = level.ToUpper();
         SceneTransitionManager.Instance.ChangeScene("LevelTest");
     }

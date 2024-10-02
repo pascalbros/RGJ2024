@@ -87,24 +87,29 @@ public class LevelGenerator: MonoBehaviour {
 
 
     private void Start() {
-        if (currentLevel >= levels.Length || currentLevel < 0) {
-            currentLevel = 0;
-        }
-        if (level == null) {
-            level = levels[currentLevel];
-        } 
-        if (levelContent == null || levelContent.Length == 0) {
-            levelContent = level.text;
-        } else {
+        if (currentLevel < 0 && levelContent != null && levelContent.Length > 0)
+        {
+            // from text
             level = null;
-            currentLevel = -1;
+        }
+        else
+        {
+            // internal level
+            if (currentLevel >= levels.Length || currentLevel < 0)
+            {
+                currentLevel = 0;
+            }
+            if (level == null)
+            {
+                level = levels[currentLevel];
+            }
+            levelContent = level.text;
         }
         var size = SizeFromLevel(levelContent);
         DrawCheckboard(size.Item1, size.Item2, lightTile, darkTile);
         DrawLevel();
         DrawBorder(size.Item1, size.Item2);
         DrawInitialObjects();
-        levelContent = null;
     }
 
     public static LevelTileType[,] ParseLevel(string level) {
